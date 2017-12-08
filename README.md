@@ -6,9 +6,6 @@
   <a href="http://travis-ci.org/mycaule/can-we-row"><img src="https://api.travis-ci.org/mycaule/can-we-row.svg?branch=master" alt="Build Status"></a>
   <a href="https://david-dm.org/mycaule/can-we-row"><img src="https://david-dm.org/mycaule/can-we-row/status.svg" alt="dependencies Status"></a>
   <a href="https://david-dm.org/mycaule/can-we-row?type=dev"><img src="https://david-dm.org/mycaule/can-we-row/dev-status.svg" alt="devDependencies Status"></a>
-	<br>
-	<a href="https://www.npmjs.com/package/can-we-row"><img src="https://img.shields.io/npm/l/can-we-row.svg" alt="npm package"></a>
-  <br>
   <br>
 </p>
 

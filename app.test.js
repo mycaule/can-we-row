@@ -4,7 +4,6 @@ const app = require('./app')
 
 test('Vigiecrues', async t => {
   const observations = await app.vigiecrues.observations()
-  t.snapshot(observations)
   t.is(observations.Observations.ListeStation.length, 1747)
   t.is(observations.PasObservations.ListeStation.length, 28)
 })
