@@ -16,7 +16,12 @@ Can we row? Based on water level and weather.
 
 For rowers in Paris, a simple website to check if you can row based on water levels and weather.
 
-Scraping using `cheerio` on [Vigicrues](http://www.vigicrues.gouv.fr) website and using the [Forecast API](https://developer.forecast.io/docs/v2).
+Scraping using `cheerio` on [Vigicrues](http://www.vigicrues.gouv.fr) website and using the [Dark Sky API](https://darksky.net/dev/docs).
+
+
+## Usage
+
+Please make sure to set `process.env.DARKSKY_API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'`
 
 ## Contributions
 
@@ -24,8 +29,6 @@ Scraping using `cheerio` on [Vigicrues](http://www.vigicrues.gouv.fr) website an
 
 ### Roadmap
 
-- [ ] Investigate about Vigicrue new APIs
-- [ ] Investigate if Forecast API is a good choice [NPM package](https://www.npmjs.com/package/forecastio)
 - [ ] Build a backend application
 - [ ] Build a web interface with React
 * Set the limit: default 700 m3/s
@@ -39,3 +42,4 @@ Scraping using `cheerio` on [Vigicrues](http://www.vigicrues.gouv.fr) website an
 ## References
 
 * [Vigiecrues](http://www.vigicrues.gouv.fr)
+* [Dark Sky API](https://darksky.net/dev/docs)

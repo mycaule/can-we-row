@@ -20,7 +20,8 @@
     "axios": "^0.17.1",
     "cheerio": "^0.22.0",
     "moment": "^2.19.3",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "superstruct": "^0.4.5"
   },
   "devDependencies": {
     "ava": "^0.24.0",
