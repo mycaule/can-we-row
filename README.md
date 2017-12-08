@@ -14,10 +14,7 @@
 
 Can we row? Based on water level and weather.
 
-For rowers in Paris, a simple website to check if you can row based on water levels and weather.
-
-Scraping using `cheerio` on [Vigicrues](http://www.vigicrues.gouv.fr) website and using the [Dark Sky API](https://darksky.net/dev/docs).
-
+A simple website for rowers to check if they can row based on water levels and weather.
 
 ## Usage
 
@@ -31,10 +28,11 @@ Please make sure to set `process.env.DARKSKY_API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxx
 
 - [ ] Build a backend application
 - [ ] Build a web interface with React
-* Set the limit: default 700 m3/s
-* Select Day of the week: default Wed and Sat
-* Select min temperature : 10°C
-* Provide URLs you can copy paste in your bookmarks
+  * Set the limit: default 700 m3/s
+  * Select Day of the week: default Wed and Sat
+  * Select min temperature : 10°C
+  * Provide URLs you can copy paste in your bookmarks
+- [ ] Use [prophet](https://github.com/facebook/prophet) to forecast conditions
 
 ### License
 `can-we-row` is licensed under the [MIT License](https://github.com/mycaule/can-we-row/blob/master/LICENSE).
