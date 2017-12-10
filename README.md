@@ -24,8 +24,8 @@ Please make sure to set `process.env.DARKSKY_API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxx
 
 ### Roadmap
 
-- [ ] Build a backend application
-- [ ] Build a web interface with React
+- [ ] Build a backend application (with Cloud Functions)
+- [ ] Build a web interface with React [Reason-React](https://reasonml.github.io/reason-react/docs/en/installation.html)
   * Set the limit: default 700 m3/s
   * Select Day of the week: default Wed and Sat
   * Select min temperature : 10°C
@@ -37,5 +37,6 @@ Please make sure to set `process.env.DARKSKY_API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxx
 
 ## References
 
-* [Vigiecrues](http://www.vigicrues.gouv.fr)
+* [Vigicrues](https://www.vigicrues.gouv.fr), [Terms of use](https://www.data.gouv.fr/fr/datasets/hauteurs-deau-et-debits-des-cours-deau-observes-en-temps-reel-aux-stations-du-reseau-vigicrues/)
+* [Vigilance Meteo France](https://vigilance.meteofrance.com/)
 * [Dark Sky API](https://darksky.net/dev/docs)
