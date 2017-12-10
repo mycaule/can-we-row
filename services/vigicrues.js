@@ -1,6 +1,3 @@
-/* eslint import/no-unresolved: [2, { ignore: ['\.config.js$'] }] */
-/* eslint import/no-unassigned-import: "off" */
-/* eslint no-unused-vars: "off" */
 /* eslint new-cap: "off" */
 
 const axios = require('axios')
@@ -9,18 +6,22 @@ const isUrl = require('is-url')
 
 const struct = S.superstruct({
   types: {
-    url: isUrl
+    url: isUrl,
+    simple: v => v === 'simple',
+    iso: v => v === 'iso'
   }
 })
 
+const VolumeUnit = struct.enum(['H', 'Q'])
+
 const Stations = struct({
   VersionFlux: 'string',
-  GrdSerie: 'string',
+  GrdSerie: VolumeUnit,
   NbElements: 'number',
   Observations: {
     NbElements: 'number',
     ListeStation: [{
-      DtObsHydro: 'number',
+      DtObsHydro: 'number | string',
       CdStationHydro: 'string'
     }]
   },
@@ -38,8 +39,14 @@ const Observations = struct({
     CdStationHydro: 'string',
     LbStationHydro: 'string',
     Link: 'url',
-    GrdSerie: 'string',
-    ObssHydro: [['number', 'number']]
+    GrdSerie: VolumeUnit,
+    ObssHydro: struct.union([
+      [['number | string', 'number']],
+      [{
+        DtObsHydro: 'number | string',
+        ResObsHydro: 'number'
+      }]
+    ])
   }
 })
 
@@ -64,7 +71,7 @@ const Informations = struct({
     },
     CruesHistoriques: [{
       LbUsuel: 'string',
-      ValHauteur: 'string',
+      ValHauteur: 'string | null',
       ValDebit: 'string'
     }],
     StationsBassin: [{
@@ -92,6 +99,13 @@ const Bulletin = struct({
   }]
 })
 
+const ReqParams = struct({
+  CdStationHydro: 'string',
+  GrdSerie: VolumeUnit,
+  FormatSortie: 'simple?',
+  FormatDate: 'iso?'
+})
+
 const vigicrues = axios.create({
   baseURL: 'https://www.vigicrues.gouv.fr/services',
   timeout: 2000
@@ -106,9 +120,9 @@ const informations = CdStationHydro =>
     params: {CdStationHydro}
   }).then(resp => Informations(resp.data))
 
-const observations = (CdStationHydro, GrdSerie = 'H', FormatDate = 'iso', FormatSortie = 'simple') =>
+const observations = (CdStationHydro, GrdSerie = 'H', FormatDate = undefined, FormatSortie = undefined) =>
   vigicrues.get('/observations.json/index.php', {
-    params: {CdStationHydro, GrdSerie, FormatSortie}
+    params: ReqParams({CdStationHydro, GrdSerie, FormatSortie, FormatDate})
   }).then(resp => Observations(resp.data))
 
 const bulletin = CdEntVigiCru =>

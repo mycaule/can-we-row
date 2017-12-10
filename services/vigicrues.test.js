@@ -10,12 +10,18 @@ test('stations', async t => {
 })
 
 test('observations', async t => {
-  const observations = await vigicrues.observations('F700000103', 'H')
-  t.is(observations.VersionFlux, 'Beta 0.3')
+  const obsHauteurs = await vigicrues.observations('F700000103', 'H')
+  const obsDebits = await vigicrues.observations('F700000103', 'Q')
+  const obsDebitsIso = await vigicrues.observations('F700000103', 'Q', 'iso')
+  const obsDebitsIsoSimple = await vigicrues.observations('F700000103', 'Q', 'iso', 'simple')
+  t.is(obsHauteurs.VersionFlux, 'Beta 0.3')
+  t.is(obsDebits.VersionFlux, 'Beta 0.3')
+  t.is(obsDebitsIso.VersionFlux, 'Beta 0.3')
+  t.is(obsDebitsIsoSimple.VersionFlux, 'Beta 0.3')
 })
 
 test('informations', async t => {
-  const informations = await vigicrues.informations('F700000103')
+  const informations = await vigicrues.informations('F700000102')
   t.is(informations.VersionFlux, 'Beta 0.3e')
 })
 

@@ -24,6 +24,7 @@ Please make sure to set `process.env.DARKSKY_API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxx
 
 ### Roadmap
 
+- [ ] Investigate on common threshold detection techniques for time series and IT monitoring techniques
 - [ ] Build a backend application (with Cloud Functions)
 - [ ] Build a web interface with React [Reason-React](https://reasonml.github.io/reason-react/docs/en/installation.html)
   * Set the limit: default 700 m3/s
