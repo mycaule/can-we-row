@@ -16,7 +16,22 @@ A simple website for rowers to check if they can row based on different time-ser
 
 ## Setup
 
-The web application exposes a `/metrics` endpoint to expose to the [Prometheus](https://github.com/prometheus/prometheus) monitoring system.
+The web application serves a `/metrics` endpoint to expose to the [Prometheus](https://github.com/prometheus/prometheus) monitoring system.
+
+### Example
+
+[`GET /metrics/hauteurs?stations=...`](https://can-we-row.herokuapp.com/metrics/hauteurs?stations=F700000103&stations=U472002001&stations=O972001001&stations=M800001010&stations=O222251001&stations=A060005050`)
+
+```
+# HELP hauteurs Observations par hauteur H
+# TYPE hauteurs gauge
+hauteurs{station="F700000103"} 1.46 1512993000000
+hauteurs{station="M800001010"} 5.26 1512994800000
+hauteurs{station="O222251001"} -0.18 1512995400000
+hauteurs{station="U472002001"} 2.32 1512993600000
+hauteurs{station="O972001001"} 5.23 1512995400000
+hauteurs{station="A060005050"} 2.87 1512993600000
+```
 
 ### Setting up API keys
 
@@ -44,7 +59,6 @@ ps -ef
 # Reload Prometheus configuration
 kill -HUP [pid]
 ```
-
 
 ## Contributions
 
