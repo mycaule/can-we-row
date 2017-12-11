@@ -18,7 +18,9 @@
   "homepage": "https://github.com/mycaule/can-we-row",
   "dependencies": {
     "axios": "^0.17.1",
-    "superstruct": "^0.4.5"
+    "express": "^4.16.2",
+    "prom-client": "^10.2.2",
+    "superstruct": "^0.4.6"
   },
   "devDependencies": {
     "ava": "^0.24.0",

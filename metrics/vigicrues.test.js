@@ -18,6 +18,12 @@ test('observations', async t => {
   t.is(obsDebits.VersionFlux, 'Beta 0.3')
   t.is(obsDebitsIso.VersionFlux, 'Beta 0.3')
   t.is(obsDebitsIsoSimple.VersionFlux, 'Beta 0.3')
+
+  const [first, ...rest] = obsDebitsIsoSimple.Serie.ObssHydro
+  const last = rest.pop()
+  console.log(first)
+  console.log(last)
+  console.log(rest.length)
 })
 
 test('informations', async t => {

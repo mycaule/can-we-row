@@ -12,7 +12,7 @@
 
 Can we row? Based on water level and weather.
 
-A simple website for rowers to check if they can row based on water levels and weather.
+A simple website for rowers to check if they can row based on different time-series metrics (water levels, weather).
 
 ## Usage
 
@@ -24,8 +24,7 @@ Please make sure to set `process.env.DARKSKY_API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxx
 
 ### Roadmap
 
-- [ ] Investigate on common threshold detection techniques for time series and IT monitoring techniques
-- [ ] Build a backend application (with Cloud Functions)
+- [x] Investigate on common threshold detection techniques for time series and IT monitoring techniques ([Prometheus](https://prometheus.io))
 - [ ] Build a web interface with React [Reason-React](https://reasonml.github.io/reason-react/docs/en/installation.html)
   * Set the limit: default 700 m3/s
   * Select Day of the week: default Wed and Sat
