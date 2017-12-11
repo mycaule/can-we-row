@@ -14,16 +14,15 @@ test('observations', async t => {
   const obsDebits = await vigicrues.observations('F700000103', 'Q')
   const obsDebitsIso = await vigicrues.observations('F700000103', 'Q', 'iso')
   const obsDebitsIsoSimple = await vigicrues.observations('F700000103', 'Q', 'iso', 'simple')
+
+  const [first, ...rest] = obsDebitsIsoSimple.Serie.ObssHydro
+  const last = rest.pop()
+  console.log(`Got ${rest.length + 2} measurements from ${first[0]} to ${last[0]}`)
+
   t.is(obsHauteurs.VersionFlux, 'Beta 0.3')
   t.is(obsDebits.VersionFlux, 'Beta 0.3')
   t.is(obsDebitsIso.VersionFlux, 'Beta 0.3')
   t.is(obsDebitsIsoSimple.VersionFlux, 'Beta 0.3')
-
-  const [first, ...rest] = obsDebitsIsoSimple.Serie.ObssHydro
-  const last = rest.pop()
-  console.log(first)
-  console.log(last)
-  console.log(rest.length)
 })
 
 test('informations', async t => {
