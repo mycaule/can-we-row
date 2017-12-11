@@ -104,8 +104,12 @@ const geocoder = (city = 'paris') => {
 
 const meteo = (city = 'paris', key = process.env.DARKSKY_API_KEY) => {
   const gps = geocoder(city)
-  return darksky.get(`/forecast/${key}/${gps.lat},${gps.lon}`)
-    .then(resp => Forecast(resp.data))
+  return darksky.get(`/forecast/${key}/${gps.lat},${gps.lon}`, {
+    params: {
+      units: 'si',
+      lang: 'fr'
+    }
+  }).then(resp => Forecast(resp.data))
 }
 
 module.exports = {meteo}

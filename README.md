@@ -37,8 +37,8 @@ hauteurs{station="A060005050"} 2.87 1512993600000
 ```
 # HELP temperatures Températures
 # TYPE temperatures gauge
-temperatures{city="paris"} 43.91 1513004293
-temperatures{city="lyon"} 45.9 1513004293
+temperatures{city="paris"} 5.56 1513008710000
+temperatures{city="lyon"} 7.46 1513008710000
 ```
 
 ### Setting up API keys

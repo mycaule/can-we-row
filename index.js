@@ -63,7 +63,7 @@ app.get('/metrics/temperatures', (req, res) => {
       .then(dark => {
         console.log(`Got weather measurements from ${city}`)
         const cur = dark.currently
-        Temperatures.labels(city).set(cur.temperature, cur.time)
+        Temperatures.labels(city).set(cur.temperature, cur.time * 1000)
       })
     ))
     .then(() => {
