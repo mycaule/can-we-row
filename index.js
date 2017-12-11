@@ -1,11 +1,11 @@
-const patriarchy = require('patriarchy')
 const prometheus = require('prom-client')
 const app = require('express')()
+const is = require('is')
 const vigicrues = require('./metrics/vigicrues')
 
 const Debits = new prometheus.Gauge({
-  name: 'debits',
-  help: 'Observations par débit Q',
+  name: 'hauteurs',
+  help: 'Observations par hauteur H',
   labelNames: ['station']
 })
 
@@ -16,20 +16,30 @@ app.get('/metrics', (req, res) => {
   res.end(prometheus.register.metrics())
 })
 
-app.get('/metrics/debits/:station', (req, res) => {
-  const station = req.params.station
+app.get('/metrics/hauteurs', (req, res) => {
+  let stations = []
 
-  vigicrues.informations(station)
-    .then(res => console.log(patriarchy(res)))
+  if (is.string(req.query.stations)) {
+    stations = [req.query.stations]
+  } else if (is.array(req.query.stations)) {
+    stations = req.query.stations
+  }
 
-  vigicrues.observations(station, 'Q')
-    .then(vig => {
-      const [last] = vig.Serie.ObssHydro.slice(-1)
-      Debits.labels(station).set(last.ResObsHydro, last.DtObsHydro)
-
+  Promise.all(stations.map(station =>
+      vigicrues.observations(station, 'H')
+      .then(vig => {
+        console.log(`Got ${vig.Serie.ObssHydro.length} measurements from ${station} (${vig.Serie.LbStationHydro})`)
+        const [last] = vig.Serie.ObssHydro.slice(-1)
+        if (last) {
+          Debits.labels(station).set(last.ResObsHydro, last.DtObsHydro)
+        }
+      })
+    ))
+    .then(() => {
       res.set('Content-Type', prometheus.register.contentType)
-      res.end(prometheus.register.getSingleMetricAsString('debits'))
+      res.end(prometheus.register.getSingleMetricAsString('hauteurs'))
     })
+    .catch(err => res.status(500).send(err))
 })
 
 app.listen(port)

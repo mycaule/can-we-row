@@ -20,14 +20,13 @@
   "dependencies": {
     "axios": "^0.17.1",
     "express": "^4.16.2",
+    "is": "^3.2.1",
+    "is-url": "^1.2.2",
     "prom-client": "^10.2.2",
     "superstruct": "^0.4.6"
   },
   "devDependencies": {
     "ava": "^0.24.0",
-    "is-url": "^1.2.2",
-    "moment": "^2.19.3",
-    "patriarchy": "^1.0.8",
     "xo": "^0.19.0"
   },
   "xo": {

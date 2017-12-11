@@ -34,3 +34,8 @@ test('bulletin', async t => {
   const bulletin = await vigicrues.bulletin('7')
   t.is(bulletin.version, 'Beta 0.2a')
 })
+
+test('station inconnue', async t => {
+  const error = await t.throws(vigicrues.observations('F700000105', 'Q'))
+  t.is(error.value[0].error_msg, 'Code de station inconnu')
+})

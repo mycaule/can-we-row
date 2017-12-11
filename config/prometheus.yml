@@ -1,6 +1,6 @@
 global:
-  scrape_interval:     10m
-  evaluation_interval: 15s
+  scrape_interval:     5m
+  evaluation_interval: 1m
 
 # Alertmanager configuration
 alerting:
@@ -9,12 +9,16 @@ alerting:
     - targets:
       # - alertmanager:9093
 
-# Load rules once and periodically evaluate them according to the global 'evaluation_interval'
+# Load rules once and periodically
 rule_files:
   # - "first_rules.yml"
   # - "second_rules.yml"
 
 scrape_configs:
   - job_name: 'vigicrue'
+    metrics_path: '/metrics/hauteurs'
+    params:
+      stations: ['F700000103', 'U472002001', 'O972001001', 'M800001010', 'O222251001', 'A060005050']
+    scheme: 'https'
     static_configs:
       - targets: ['can-we-row.herokuapp.com']

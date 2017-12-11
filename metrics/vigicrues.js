@@ -1,4 +1,5 @@
 /* eslint new-cap: "off" */
+/* eslint camelcase: "off" */
 
 const axios = require('axios')
 const S = require('superstruct')
@@ -106,6 +107,10 @@ const ReqParams = struct({
   FormatDate: 'iso?'
 })
 
+const VigiError = struct([{
+  error_msg: 'string'
+}])
+
 const vigicrues = axios.create({
   baseURL: 'https://www.vigicrues.gouv.fr/services',
   timeout: 2000
@@ -113,7 +118,7 @@ const vigicrues = axios.create({
 
 const stations = () =>
   vigicrues.get('/observations.json/')
-    .then(resp => Stations(resp.data))
+    .then(resp => struct.union([Stations, VigiError])(resp.data))
 
 const informations = CdStationHydro =>
   vigicrues.get('/station.json/', {
