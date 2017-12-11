@@ -20,7 +20,7 @@ The web application serves a `/metrics` endpoint to expose to the [Prometheus](h
 
 ### Example
 
-[`GET /metrics/hauteurs?stations=...`](https://can-we-row.herokuapp.com/metrics/hauteurs?stations=F700000103&stations=U472002001&stations=O972001001&stations=M800001010&stations=O222251001&stations=A060005050`)
+[`GET /metrics/hauteurs?stations=...`](https://can-we-row.herokuapp.com/metrics/hauteurs?stations=F700000103&stations=U472002001&stations=O972001001&stations=M800001010&stations=O222251001&stations=A060005050)
 
 ```
 # HELP hauteurs Observations par hauteur H
@@ -31,6 +31,14 @@ hauteurs{station="O222251001"} -0.18 1512995400000
 hauteurs{station="U472002001"} 2.32 1512993600000
 hauteurs{station="O972001001"} 5.23 1512995400000
 hauteurs{station="A060005050"} 2.87 1512993600000
+```
+
+[`GET /metrics/temperatures?cities=...`](https://can-we-row.herokuapp.com/metrics/temperatures?cities=paris&cities=lyon)
+```
+# HELP temperatures Températures
+# TYPE temperatures gauge
+temperatures{city="paris"} 43.91 1513004293
+temperatures{city="lyon"} 45.9 1513004293
 ```
 
 ### Setting up API keys
@@ -66,8 +74,8 @@ kill -HUP [pid]
 
 ### Roadmap
 
-- [ ] Investigate on common threshold detection techniques for time series
-- [ ] Build a web interface with [Reason-React](https://reasonml.github.io/reason-react/docs/en/installation.html)
+- [ ] Investigate on common threshold detection techniques for time series [Engineering statistics handbook](http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4.htm), [Gauss library](https://github.com/fredrick/gauss)
+- [ ] Build a web interface with [Reason-React](https://reasonml.github.io/reason-react/docs/en/installation.html), [Netflix RAD](https://medium.com/netflix-techblog/rad-outlier-detection-on-big-data-d6b0494371cc), [Western Electric rules](https://en.wikipedia.org/wiki/Western_Electric_rules)
   * Set the limit: default 700 m3/s
   * Select Day of the week: default Wed and Sat
   * Select min temperature : 10°C
@@ -75,6 +83,7 @@ kill -HUP [pid]
 - [ ] Optional: Use [prophet](https://github.com/facebook/prophet) to forecast conditions
 - [ ] Add more metrics (météo des plages, météo des neiges) and more sports
 - [ ] Add email alerts with custom rules based on thresholds
+- [ ] Is [Graphite](https://github.com/graphite-project/graphite-web) or [InfluxDB](https://www.influxdata.com/time-series-platform/influxdb/) better for that task ?
 
 ### License
 
@@ -86,4 +95,6 @@ kill -HUP [pid]
 * [Vigilance Meteo France](https://vigilance.meteofrance.com/)
 * [Dark Sky API](https://darksky.net/dev/docs)
 * [Prometheus](https://github.com/prometheus/prometheus)
+* [Marceau Leboeuf - river Alert](https://github.com/MarceauLeboeuf/river_Alert), written in Processing
+* [Alex Ellis - Create an environmental monitoring dashboard](https://blog.alexellis.io/environmental-monitoring-dashboard/)
 * [Heroku Configuration and Config Vars](https://devcenter.heroku.com/articles/config-vars)

@@ -22,3 +22,11 @@ scrape_configs:
     scheme: 'https'
     static_configs:
       - targets: ['can-we-row.herokuapp.com']
+
+  - job_name: 'darksky'
+    metrics_path: '/metrics/temperatures'
+    params:
+      stations: ['paris', 'lyon', 'bordeaux', 'nantes']
+    scheme: 'https'
+    static_configs:
+      - targets: ['can-we-row.herokuapp.com']

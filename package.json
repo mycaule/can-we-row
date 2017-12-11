@@ -19,7 +19,7 @@
   "homepage": "https://github.com/mycaule/can-we-row",
   "dependencies": {
     "axios": "^0.17.1",
-    "express": "^4.16.2",
+    "express": "^5.0.0-alpha.6",
     "is": "^3.2.1",
     "is-url": "^1.2.2",
     "prom-client": "^10.2.2",

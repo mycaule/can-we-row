@@ -95,6 +95,8 @@ const geocoder = (city = 'paris') => {
       return {lat: 45.648, lon: 5.280}
     case 'nantes':
       return {lat: 47.109, lon: -1.114}
+    case 'bordeaux':
+      return {lat: 44.838, lon: -0.579}
     default:
       return {err: `Unknown city : ${city}`}
   }

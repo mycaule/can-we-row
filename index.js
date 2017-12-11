@@ -2,10 +2,17 @@ const prometheus = require('prom-client')
 const app = require('express')()
 const is = require('is')
 const vigicrues = require('./metrics/vigicrues')
+const darksky = require('./metrics/darksky')
 
-const Debits = new prometheus.Gauge({
+const Temperatures = new prometheus.Gauge({
+  name: 'temperatures',
+  help: 'Températures',
+  labelNames: ['city']
+})
+
+const Hauteurs = new prometheus.Gauge({
   name: 'hauteurs',
-  help: 'Observations par hauteur H',
+  help: 'Hauteurs d\'eau',
   labelNames: ['station']
 })
 
@@ -28,16 +35,40 @@ app.get('/metrics/hauteurs', (req, res) => {
   Promise.all(stations.map(station =>
       vigicrues.observations(station, 'H')
       .then(vig => {
-        console.log(`Got ${vig.Serie.ObssHydro.length} measurements from ${station} (${vig.Serie.LbStationHydro})`)
+        console.log(`Got water measurements from ${station} (${vig.Serie.LbStationHydro})`)
         const [last] = vig.Serie.ObssHydro.slice(-1)
         if (last) {
-          Debits.labels(station).set(last.ResObsHydro, last.DtObsHydro)
+          Hauteurs.labels(station).set(last.ResObsHydro, last.DtObsHydro)
         }
       })
     ))
     .then(() => {
       res.set('Content-Type', prometheus.register.contentType)
       res.end(prometheus.register.getSingleMetricAsString('hauteurs'))
+    })
+    .catch(err => res.status(500).send(err))
+})
+
+app.get('/metrics/temperatures', (req, res) => {
+  let cities = []
+
+  if (is.string(req.query.cities)) {
+    cities = [req.query.cities]
+  } else if (is.array(req.query.cities)) {
+    cities = req.query.cities
+  }
+
+  Promise.all(cities.map(city =>
+      darksky.meteo(city)
+      .then(dark => {
+        console.log(`Got weather measurements from ${city}`)
+        const cur = dark.currently
+        Temperatures.labels(city).set(cur.temperature, cur.time)
+      })
+    ))
+    .then(() => {
+      res.set('Content-Type', prometheus.register.contentType)
+      res.end(prometheus.register.getSingleMetricAsString('temperatures'))
     })
     .catch(err => res.status(500).send(err))
 })
