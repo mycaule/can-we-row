@@ -5,6 +5,7 @@
 
 const axios = require('axios')
 const S = require('superstruct')
+const Positions = require('./geocoder')
 
 const Measurement = S.struct({
   time: 'number',
@@ -48,7 +49,9 @@ const Measurement = S.struct({
   ozone: 'number',
   sunriseTime: 'number?',
   sunsetTime: 'number?',
-  moonPhase: 'number?'
+  moonPhase: 'number?',
+  nearestStormDistance: 'number?',
+  nearestStormBearing: 'number?'
 })
 
 const Forecast = S.struct({
@@ -56,6 +59,7 @@ const Forecast = S.struct({
   longitude: 'number',
   timezone: 'string',
   currently: Measurement,
+  minutely: 'object?',
   hourly: S.struct({
     summary: 'string',
     icon: 'string',
@@ -84,22 +88,15 @@ try {
 
 const darksky = axios.create({
   baseURL: 'https://api.darksky.net',
-  timeout: 2000
+  timeout: 3000
 })
 
 const geocoder = (city = 'paris') => {
-  switch (city.toLowerCase()) {
-    case 'paris':
-      return {lat: 48.866, lon: 2.333}
-    case 'lyon':
-      return {lat: 45.648, lon: 5.280}
-    case 'nantes':
-      return {lat: 47.109, lon: -1.114}
-    case 'bordeaux':
-      return {lat: 44.838, lon: -0.579}
-    default:
-      return {err: `Unknown city : ${city}`}
+  const info = Positions.find(elt => elt.city === city.toLowerCase())
+  if (info) {
+    return {lat: info.lat, lon: info.lon}
   }
+  throw new Error(`Unknown city: ${city}`)
 }
 
 const meteo = (city = 'paris', key = process.env.DARKSKY_API_KEY) => {

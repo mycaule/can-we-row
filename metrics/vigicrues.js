@@ -113,7 +113,7 @@ const VigiError = struct([{
 
 const vigicrues = axios.create({
   baseURL: 'https://www.vigicrues.gouv.fr/services',
-  timeout: 2000
+  timeout: 3000
 })
 
 const stations = () =>

@@ -7,12 +7,7 @@ const params = url.searchParams
 const city = params.get('city')
 const station = params.get('station')
 
-if (city === null || station === null) {
-  window.location.href = '/?city=paris&station=F700000103'
-} else {
-  $('.refresh-data').onclick = () => {
-    console.log('Refreshing')
-
+const reloadMetrics = (city, station) => () =>
     Promise.all([
       fetch(`/metrics/temperatures?cities=${city}`),
       fetch(`/metrics/hauteurs?stations=${station}`)
@@ -21,16 +16,26 @@ if (city === null || station === null) {
         location.reload()
       }
     })
-  }
+
+if (city === null || station === null) {
+  window.location.href = '/?city=paris&station=F700000103'
+} else {
+  $('.refresh-data').onclick = reloadMetrics(city, station)
 
   fetch(`/latest/temperatures?cities=${city}`)
     .then(response => {
       if (response.ok) {
         response.json().then(data => {
-          const curr = data.find(elt => elt.city === city)
-          $('.city').textContent = v.titleCase(curr.city)
-          $('.temperature').textContent = `${curr.meas} °C (${moment.unix(curr.time / 1000).lang('fr').fromNow()})`
-          console.log(curr)
+          if (data.filter(n => n).length === 0) {
+            reloadMetrics(city, station)()
+          } else {
+            const curr = data.find(elt => elt.city === city)
+            $('.title').textContent += ` pour ${v.titleCase(curr.city)}`
+            $('.temperature').textContent = `${curr.meas.toFixed(1)} °C (${moment.unix(curr.time / 1000).lang('fr').fromNow()})`
+
+            $('input[property=\'temperature\']').setAttribute('value', curr.meas)
+            console.log(curr)
+          }
         })
       }
     })
@@ -42,10 +47,15 @@ if (city === null || station === null) {
     .then(response => {
       if (response.ok) {
         response.json().then(data => {
-          const curr = data.find(elt => elt.station === station)
-          $('.water-level').textContent = `${curr.meas} mètres (${moment.unix(curr.time / 1000).lang('fr').fromNow()})`
-          $('.current-date').textContent = `${moment().lang('fr').format('LLL')}`
-          console.log(curr)
+          if (data.filter(n => n).length === 0) {
+            reloadMetrics(city, station)()
+          } else {
+            const curr = data.find(elt => elt.station === station)
+            $('.water-level').textContent = `${curr.meas.toFixed(1)} m (${moment.unix(curr.time / 1000).lang('fr').fromNow()})`
+            $('input[property=\'level\']').setAttribute('value', curr.meas)
+            $('.current-date').textContent = `${moment().lang('fr').format('LLL')}`
+            console.log(curr)
+          }
         })
       }
     })
