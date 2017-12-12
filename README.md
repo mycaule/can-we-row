@@ -144,3 +144,4 @@ kill -HUP [pid]
 * [Prometheus](https://github.com/prometheus/prometheus)
 * [Marceau Leboeuf - river Alert](https://github.com/MarceauLeboeuf/river_Alert), written in Processing
 * [Ian Malpass - Measure Anything, Measure Everything](https://codeascraft.com/2011/02/15/measure-anything-measure-everything/)
+* [Mavo - A new, approachable way to create Web applications](https://mavo.io/)
