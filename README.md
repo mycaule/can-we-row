@@ -14,6 +14,8 @@ Can we row? Based on water level and weather.
 
 A simple website for rowers to check if they can row based on different time-series metrics (water levels, weather).
 
+The project uses [French government dataset on rivers activity](https://www.data.gouv.fr/en/reuses/ca-rame-ou-pas/).
+
 ## Setup
 
 The web application serves a `/metrics` endpoint to scrape historical data and to expose latest to the [Prometheus](https://github.com/prometheus/prometheus) monitoring system. A summary of the latest data can be obtained using `/latest`.
