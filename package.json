@@ -32,7 +32,8 @@
   },
   "xo": {
     "space": true,
-    "semicolon": false
+    "semicolon": false,
+    "envs": ["node", "browser"]
   },
   "ava": {
     "snapshotDir": "snapshots"

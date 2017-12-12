@@ -1,4 +1,4 @@
-const app = require('express')()
+const express = require('express')
 const is = require('is')
 const prometheus = require('prom-client')
 
@@ -8,6 +8,7 @@ const FileAsync = require('lowdb/adapters/FileAsync')
 const vigicrues = require('./metrics/vigicrues')
 const darksky = require('./metrics/darksky')
 
+const app = express()
 const adapter = new FileAsync('db.json')
 
 const Temperatures = new prometheus.Gauge({
@@ -51,6 +52,8 @@ low(adapter).then(db => {
       })
     }
   })
+
+  app.use(express.static('public'))
 
   app.get('/latest/hauteurs', (req, res) => {
     const stations = makeArray(req.query, 'stations')
@@ -118,6 +121,10 @@ low(adapter).then(db => {
       console.error(err)
       res.status(500).send(`${err}`)
     })
+  })
+
+  app.get('/:city/:station', (req, res) => {
+    res.redirect(`/?city=${req.params.city}&station=${req.params.station}`)
   })
 
   return db.defaults({

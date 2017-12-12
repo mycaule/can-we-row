@@ -141,4 +141,4 @@ kill -HUP [pid]
 * [Dark Sky API](https://darksky.net/dev/docs)
 * [Prometheus](https://github.com/prometheus/prometheus)
 * [Marceau Leboeuf - river Alert](https://github.com/MarceauLeboeuf/river_Alert), written in Processing
-* [Heroku Configuration and Config Vars](https://devcenter.heroku.com/articles/config-vars)
+* [Ian Malpass - Measure Anything, Measure Everything](https://codeascraft.com/2011/02/15/measure-anything-measure-everything/)
