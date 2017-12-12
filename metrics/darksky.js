@@ -109,7 +109,15 @@ const meteo = (city = 'paris', key = process.env.DARKSKY_API_KEY) => {
       units: 'si',
       lang: 'fr'
     }
-  }).then(resp => Forecast(resp.data))
+  }).then(resp => {
+    const forecast = Forecast(resp.data)
+
+    const [first, ...rest] = forecast.hourly.data
+    const last = rest.pop()
+
+    console.log('Dark Sky', `got ${forecast.hourly.data.length} measurements for ${city} from ${first.time * 1000} to ${last.time * 1000}`)
+    return forecast
+  })
 }
 
 module.exports = {meteo}

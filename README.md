@@ -16,13 +16,13 @@ A simple website for rowers to check if they can row based on different time-ser
 
 ## Setup
 
-The web application serves a `/metrics` endpoint to expose to the [Prometheus](https://github.com/prometheus/prometheus) monitoring system.
+The web application serves a `/metrics` endpoint to scrape historical data and to expose latest to the [Prometheus](https://github.com/prometheus/prometheus) monitoring system. A summary of the latest data can be obtained using `/latest`.
 
-### Example
+### Routes
 
 [`GET /metrics/hauteurs?stations=...`](https://can-we-row.herokuapp.com/metrics/hauteurs?stations=F700000103&stations=U472002001&stations=O972001001&stations=M800001010&stations=O222251001&stations=A060005050)
 
-```
+```bash
 # HELP hauteurs Observations par hauteur H
 # TYPE hauteurs gauge
 hauteurs{station="F700000103"} 1.46 1512993000000
@@ -34,11 +34,56 @@ hauteurs{station="A060005050"} 2.87 1512993600000
 ```
 
 [`GET /metrics/temperatures?cities=...`](https://can-we-row.herokuapp.com/metrics/temperatures?cities=paris&cities=lyon)
-```
+
+```bash
 # HELP temperatures Températures
 # TYPE temperatures gauge
 temperatures{city="paris"} 5.56 1513008710000
 temperatures{city="lyon"} 7.46 1513008710000
+```
+
+[`GET /latest/temperatures?cities=...`](https://can-we-row.herokuapp.com/latest/temperatures?cities=paris&cities=lyon)
+
+```javascript
+[{
+  city: "paris",
+  time: 1513086316000,
+  meas: 5.63
+}, {
+  city: "lyon",
+  time: 1513086316000,
+  meas: 5.44
+}]
+```
+
+[`GET /latest/hauteurs?stations=...`](https://can-we-row.herokuapp.com/latest/hauteurs?stations=F700000103&stations=U472002001&stations=O972001001&stations=M800001010&stations=O222251001&stations=A060005050)
+
+```javascript
+[{
+  station: "F700000103",
+  time: 1513083000000,
+  meas: 1.89
+}, {
+  station: "U472002001",
+  time: 1513080000000,
+  meas: 2.32
+}, {
+  station: "O972001001",
+  time: 1513083300000,
+  meas: 4.59
+}, {
+  station: "M800001010",
+  time: 1513081200000,
+  meas: 5.46
+}, {
+  station: "O222251001",
+  time: 1513082700000,
+  meas: -0.39
+}, {
+  station: "A060005050",
+  time: 1513080000000,
+  meas: 3.07
+}]
 ```
 
 ### Setting up API keys
@@ -74,8 +119,8 @@ kill -HUP [pid]
 
 ### Roadmap
 
-- [ ] Investigate on common threshold detection techniques for time series [Engineering statistics handbook](http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4.htm), [Gauss library](https://github.com/fredrick/gauss)
-- [ ] Build a web interface with [Reason-React](https://reasonml.github.io/reason-react/docs/en/installation.html), [Netflix RAD](https://medium.com/netflix-techblog/rad-outlier-detection-on-big-data-d6b0494371cc), [Western Electric rules](https://en.wikipedia.org/wiki/Western_Electric_rules)
+- [ ] Investigate on common threshold detection techniques for time series [Engineering statistics handbook](http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4.htm), [Gauss library](https://github.com/fredrick/gauss), , [Netflix RAD](https://medium.com/netflix-techblog/rad-outlier-detection-on-big-data-d6b0494371cc), [Western Electric rules](https://en.wikipedia.org/wiki/Western_Electric_rules)
+- [ ] Build a web interface with [Reason-React](https://reasonml.github.io/reason-react/docs/en/installation.html) or [Elm](http://elm-lang.org), See also [react charts](https://github.com/enaqx/awesome-react#charts)
   * Set the limit: default 700 m3/s
   * Select Day of the week: default Wed and Sat
   * Select min temperature : 10°C
@@ -96,5 +141,4 @@ kill -HUP [pid]
 * [Dark Sky API](https://darksky.net/dev/docs)
 * [Prometheus](https://github.com/prometheus/prometheus)
 * [Marceau Leboeuf - river Alert](https://github.com/MarceauLeboeuf/river_Alert), written in Processing
-* [Alex Ellis - Create an environmental monitoring dashboard](https://blog.alexellis.io/environmental-monitoring-dashboard/)
 * [Heroku Configuration and Config Vars](https://devcenter.heroku.com/articles/config-vars)

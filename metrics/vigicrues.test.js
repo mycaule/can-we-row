@@ -15,10 +15,6 @@ test('observations', async t => {
   const obsDebitsIso = await vigicrues.observations('F700000103', 'Q', 'iso')
   const obsDebitsIsoSimple = await vigicrues.observations('F700000103', 'Q', 'iso', 'simple')
 
-  const [first, ...rest] = obsDebitsIsoSimple.Serie.ObssHydro
-  const last = rest.pop()
-  console.log(`Got ${rest.length + 2} measurements from ${first[0]} to ${last[0]}`)
-
   t.is(obsHauteurs.VersionFlux, 'Beta 0.3')
   t.is(obsDebits.VersionFlux, 'Beta 0.3')
   t.is(obsDebitsIso.VersionFlux, 'Beta 0.3')

@@ -22,6 +22,7 @@
     "express": "^5.0.0-alpha.6",
     "is": "^3.2.1",
     "is-url": "^1.2.2",
+    "lowdb": "^1.0.0",
     "prom-client": "^10.2.2",
     "superstruct": "^0.4.6"
   },
@@ -35,5 +36,9 @@
   },
   "ava": {
     "snapshotDir": "snapshots"
+  },
+  "nodemonConfig": {
+    "ignore": ["*.test.js", "db.json"],
+    "delay": "2500"
   }
 }

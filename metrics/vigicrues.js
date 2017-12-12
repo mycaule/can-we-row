@@ -128,7 +128,15 @@ const informations = CdStationHydro =>
 const observations = (CdStationHydro, GrdSerie = 'H', FormatDate = undefined, FormatSortie = undefined) =>
   vigicrues.get('/observations.json/index.php', {
     params: ReqParams({CdStationHydro, GrdSerie, FormatSortie, FormatDate})
-  }).then(resp => Observations(resp.data))
+  }).then(resp => {
+    const obs = Observations(resp.data)
+
+    const [first, ...rest] = obs.Serie.ObssHydro
+    const last = rest.pop()
+    console.log('Vigicrues', `${CdStationHydro} ${obs.Serie.LbStationHydro}`, `got ${obs.Serie.ObssHydro.length} measurements from ${first[0] || first.DtObsHydro} to ${last[0] || last.DtObsHydro}`)
+
+    return obs
+  })
 
 const bulletin = CdEntVigiCru =>
   vigicrues.get('/bulletin.json/', {
