@@ -53,7 +53,7 @@ if (city === null || station === null) {
             const curr = data.find(elt => elt.station === station)
             $('.water-level').textContent = `${curr.meas.toFixed(1)} m (${moment.unix(curr.time / 1000).lang('fr').fromNow()})`
             $('input[property=\'level\']').setAttribute('value', curr.meas)
-            $('.current-date').textContent = `${moment().lang('fr').format('LLL')}`
+            $('.current-date').textContent += ` ${moment().lang('fr').format('ll')}`
             console.log(curr)
           }
         })

@@ -16,6 +16,31 @@ A simple website for rowers to check if they can row based on different time-ser
 
 The project uses [French government dataset on rivers activity](https://www.data.gouv.fr/en/reuses/ca-rame-ou-pas/).
 
+It is available for the following French cities:
+[Lille](https://can-we-row.herokuapp.com/lille/E381126501),
+[Amiens](https://can-we-row.herokuapp.com/amiens/E640091001),
+[Caen](https://can-we-row.herokuapp.com/caen/I374101001),
+[Rouen](https://can-we-row.herokuapp.com/rouen/H503011001),
+[Paris](https://can-we-row.herokuapp.com/paris/F700000103),
+[Châlons-en-Champagne](https://can-we-row.herokuapp.com/chalons/H520101003),
+[Metz](https://can-we-row.herokuapp.com/metz/A743061001),
+[Strasbourg](https://can-we-row.herokuapp.com/strasbourg/A061005051),
+[Rennes](https://can-we-row.herokuapp.com/rennes/J709063002),
+[Nantes](https://can-we-row.herokuapp.com/nantes/M800001010),
+[Orléans](https://can-we-row.herokuapp.com/orleans/K435001010),
+[Poitiers](https://can-we-row.herokuapp.com/poitiers/L250161001),
+[Limoges](https://can-we-row.herokuapp.com/limoges/L040061002),
+[Clermont-Ferrand](https://can-we-row.herokuapp.com/clermont/K322201001),
+[Dijon](https://can-we-row.herokuapp.com/dijon/U132401001),
+[Besançon](https://can-we-row.herokuapp.com/besancon/U251542001),
+[Lyon](https://can-we-row.herokuapp.com/lyon/U472002001),
+[Bordeaux](https://can-we-row.herokuapp.com/bordeaux/O972001001),
+[Toulouse](https://can-we-row.herokuapp.com/toulouse/O200004001)
+[Montpellier](https://can-we-row.herokuapp.com/montpellier/Y321001001),
+[Marseille](https://can-we-row.herokuapp.com/marseille/Y442404001).
+
+[Open an issue](https://github.com/mycaule/can-we-row/issues) if the data is incorrect or if you want your city to appear on the list.
+
 ## Setup
 
 The web application serves a `/metrics` endpoint to scrape historical data and to expose latest to the [Prometheus](https://github.com/prometheus/prometheus) monitoring system. A summary of the latest data can be obtained using `/latest`.
