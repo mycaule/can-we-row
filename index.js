@@ -23,6 +23,12 @@ const Hauteurs = new prometheus.Gauge({
   labelNames: ['station']
 })
 
+const Debits = new prometheus.Gauge({
+  name: 'debits',
+  help: 'Débits d\'eau',
+  labelNames: ['station']
+})
+
 const makeArray = (query, field) => {
   let result = []
   if (is.string(query[field])) {
@@ -60,6 +66,11 @@ low(adapter).then(db => {
     res.json(stations.map(station => db.get('current.hauteurs').find({station}).value()))
   })
 
+  app.get('/latest/debits', (req, res) => {
+    const stations = makeArray(req.query, 'stations')
+    res.json(stations.map(station => db.get('current.debits').find({station}).value()))
+  })
+
   app.get('/metrics/hauteurs', (req, res) => {
     const stations = makeArray(req.query, 'stations')
 
@@ -82,6 +93,35 @@ low(adapter).then(db => {
     .then(() => {
       res.set('Content-Type', prometheus.register.contentType)
       res.end(prometheus.register.getSingleMetricAsString('hauteurs'))
+    })
+    .catch(err => {
+      console.error(err)
+      res.status(500).send(`${err}`)
+    })
+  })
+
+  app.get('/metrics/debits', (req, res) => {
+    const stations = makeArray(req.query, 'stations')
+
+    Promise.all(stations.map(station =>
+      vigicrues.observations(station, 'Q')
+      .then(vig => {
+        const [last] = vig.Serie.ObssHydro.slice(-1)
+        const arr = vig.Serie.ObssHydro.map(obs => {
+          return {station, time: obs.DtObsHydro, meas: obs.ResObsHydro}
+        })
+
+        db.get('historic.debits').upsert(arr, 'station', 'time').write()
+
+        if (last) {
+          db.get('current.debits').upsert([{station, time: last.DtObsHydro, meas: last.ResObsHydro}], 'station').write()
+          Debits.labels(station).set(last.ResObsHydro, last.DtObsHydro)
+        }
+      })
+    ))
+    .then(() => {
+      res.set('Content-Type', prometheus.register.contentType)
+      res.end(prometheus.register.getSingleMetricAsString('debits'))
     })
     .catch(err => {
       console.error(err)
@@ -130,10 +170,12 @@ low(adapter).then(db => {
   return db.defaults({
     historic: {
       hauteurs: [],
+      debits: [],
       temperatures: []
     },
     current: {
       hauteurs: [],
+      debits: [],
       temperatures: []
     }
   }).write()

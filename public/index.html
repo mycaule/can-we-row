@@ -29,13 +29,13 @@
 
     <div class="inputs">
       <label>
-        Température minimale (°C):
-        <input type="number" step="0.5" value="10" property="temperatureMin" />
+        Température minimale (°C)
+        <input type="number" step="0.5" value="8" property="temperatureMin" />
         <input type="hidden" property="temperature" />
       </label>
       <label>
-        Hauteur d'eau maximale (m):
-        <input type="number" min="0" max="100" step="0.1" value="3.2" property="levelMax" />
+        Débit d'eau maximal (m³/s)
+        <input type="number" min="300" max="500" step="10" value="470" property="levelMax" />
         <input type="hidden" property="level" />
       </label>
     </div>
@@ -44,51 +44,49 @@
       <span class="current-date">Relevé du</span>
       <a class="refresh-data" href="#">Rafraichir</a><br>
 
-      <div class="total">
-        Hauteur d'eau:
-        <span class="water-level"></span>
-      </div>
+      <div class="total">Débit d'eau <span class="water-level"></span></div>
+      <div class="danger2" style="display: [iff(level > 500, block, none)]">toute sortie en aviron est interdite</div>
+      <div class="warn2" style="display: [iff(500 >= level && level > levelMax, block, none)]">navigation en yolette uniquement</div>
+      <div class="amazing2" style="display: [iff(level <= levelMax, block, none)]">ok</div>
 
-      <div class="total">
-        Température:
-        <span class="temperature"></span>
-      </div>
+      <div class="total">Température <span class="temperature"></span></div>
+      <div class="danger2" style="display: [iff(temperature < 2, block, none)]">sortie déconseillée</div>
+      <div class="warn2" style="display: [iff(2 <= temperature && temperature < temperatureMin, block, none)]">température faible</div>
+      <div class="amazing2" style="display: [iff(temperatureMin <= temperature, block, none)]">ok</div>
 
-      <div class="amazing" style="display: [iff(temperatureMin < temperature && level < levelMax, block, none)]">Les conditions sont idéales !</div>
-      <div class="sucks" style="display: [iff(temperatureMin > temperature || level > levelMax, block, none)]">Ce sera pour une autre fois !</div>
-
-      <hr>
-      <p>
-        <a href="/lille/E381126501">Lille</a>,
-        <a href="/amiens/E640091001">Amiens</a>
-        <br>
-        <a href="/caen/I374101001">Caen</a>,
-        <a href="/rouen/H503011001">Rouen</a>,
-        <a href="/paris/F700000103">Paris</a>,
-        <a href="/chalons/H520101003">Châlons-en-Champagne</a>
-        <br>
-        <a href="/metz/A743061001">Metz</a>,
-        <a href="/strasbourg/A061005051">Strasbourg</a>
-        <br>
-        <a href="/rennes/J709063002">Rennes</a>,
-        <a href="/nantes/M800001010">Nantes</a>,
-        <a href="/orleans/K435001010">Orléans</a>,
-        <a href="/poitiers/L250161001">Poitiers</a>,
-        <a href="/limoges/L040061002">Limoges</a>,
-        <a href="/clermont/K322201001">Clermont-Ferrand</a>
-        <br>
-        <a href="/dijon/U132401001">Dijon</a>,
-        <a href="/besancon/U251542001">Besançon</a>,
-        <a href="/lyon/U472002001">Lyon</a>
-        <br>
-        <a href="/bordeaux/O972001001">Bordeaux</a>,
-        <a href="/toulouse/O200004001">Toulouse</a>
-        <br>
-        <a href="/montpellier/Y321001001">Montpellier</a>,
-        <a href="/marseille/Y442404001">Marseille</a>
-        <br><br>
-        <a href="https://github.com/mycaule/can-we-row/issues">Ajouter ma ville</a>
-      </p>
+      <div class="danger" style="display: [iff(level > 500, block, none)]">toute sortie en aviron est interdite</div>
+      <div class="amazing" style="display: [iff(temperatureMin <= temperature && level < levelMax, block, none)]">Les conditions sont idéales</div>
+    </div>
+    <div class="outputs">
+      <a href="/lille/E381126501">Lille</a>,
+      <a href="/amiens/E640091001">Amiens</a>
+      <br>
+      <a href="/caen/I374101001"><i>Caen</i></a>,
+      <a href="/rouen/H503011001"><i>Rouen</i></a>,
+      <a href="/paris/F700000103">Paris</a>,
+      <a href="/chalons/H520101003">Châlons-en-Champagne</a>
+      <br>
+      <a href="/metz/A743061001">Metz</a>,
+      <a href="/strasbourg/A061005051">Strasbourg</a>
+      <br>
+      <a href="/rennes/J709063002">Rennes</a>,
+      <a href="/nantes/M800001010"><i>Nantes</i></a>,
+      <a href="/orleans/K435001010">Orléans</a>,
+      <a href="/poitiers/L250161001">Poitiers</a>,
+      <a href="/limoges/L040061002">Limoges</a>,
+      <a href="/clermont/K322201001">Clermont-Ferrand</a>
+      <br>
+      <a href="/dijon/U132401001">Dijon</a>,
+      <a href="/besancon/U251542001">Besançon</a>,
+      <a href="/lyon/U472002001"><i>Lyon</i></a>
+      <br>
+      <a href="/bordeaux/O972001001"><i>Bordeaux</i></a>,
+      <a href="/toulouse/O200004001"><i>Toulouse</i></a>
+      <br>
+      <a href="/montpellier/Y321001001">Montpellier</a>,
+      <a href="/marseille/Y442404001">Marseille</a>
+      <br><br>
+      <a href="https://github.com/mycaule/can-we-row/issues">Ajouter ma ville</a>
     </div>
   </main>
 

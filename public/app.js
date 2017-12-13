@@ -10,7 +10,7 @@ const station = params.get('station')
 const reloadMetrics = (city, station) => () =>
     Promise.all([
       fetch(`/metrics/temperatures?cities=${city}`),
-      fetch(`/metrics/hauteurs?stations=${station}`)
+      fetch(`/metrics/debits?stations=${station}`)
     ]).then(([res1, res2]) => {
       if (res1.ok && res2.ok) {
         location.reload()
@@ -43,15 +43,15 @@ if (city === null || station === null) {
       console.log(err)
     })
 
-  fetch(`/latest/hauteurs?stations=${station}`)
+  fetch(`/latest/debits?stations=${station}`)
     .then(response => {
       if (response.ok) {
         response.json().then(data => {
           if (data.filter(n => n).length === 0) {
-            reloadMetrics(city, station)()
+            $('.water-level').textContent = `Aucune mesure de débit`
           } else {
             const curr = data.find(elt => elt.station === station)
-            $('.water-level').textContent = `${curr.meas.toFixed(1)} m (${moment.unix(curr.time / 1000).lang('fr').fromNow()})`
+            $('.water-level').textContent = `${curr.meas.toFixed(1)} m³/s (${moment.unix(curr.time / 1000).lang('fr').fromNow()})`
             $('input[property=\'level\']').setAttribute('value', curr.meas)
             $('.current-date').textContent += ` ${moment().lang('fr').format('ll')}`
             console.log(curr)

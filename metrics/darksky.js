@@ -12,6 +12,7 @@ const Measurement = S.struct({
   summary: 'string',
   icon: 'string',
   precipIntensity: 'number',
+  precipIntensityError: 'number?',
   precipProbability: 'number',
   precipAccumulation: 'number?',
   precipIntensityMax: 'number?',
@@ -112,7 +113,12 @@ const meteo = (city = 'paris', key = process.env.DARKSKY_API_KEY) => {
     const [first, ...rest] = forecast.hourly.data
     const last = rest.pop()
 
-    console.log('Dark Sky', `got ${forecast.hourly.data.length} measurements for ${city} from ${first.time * 1000} to ${last.time * 1000}`)
+    if (first && last) {
+      console.log('Dark Sky', `Got ${forecast.hourly.data.length} measurements for ${city} from ${first.time * 1000} to ${last.time * 1000}`)
+    } else {
+      console.log('Dark Sky', `No measurements available for ${city}`)
+    }
+
     return forecast
   })
 }

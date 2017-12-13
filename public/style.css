@@ -70,11 +70,34 @@ main {
   .amazing {
     color: hsl(80, 80%, 40%);
     font-weight: bold;
+    text-align: right;
   }
 
-  .sucks {
+  .danger {
     color: hsl(16, 80%, 40%);
     font-weight: bold;
+    text-align: right;
+  }
+
+  .amazing2 {
+    color: hsl(80, 80%, 40%);
+    font-weight: bold;
+    font-size: 80%;
+    text-align: right;
+  }
+
+  .warn2 {
+    color: hsl(45, 92%, 57%);
+    font-weight: bold;
+    font-size: 80%;
+    text-align: right;
+  }
+
+  .danger2 {
+    color: hsl(16, 80%, 40%);
+    font-weight: bold;
+    font-size: 80%;
+    text-align: right;
   }
 
   .payment {

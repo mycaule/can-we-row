@@ -19,23 +19,17 @@ The project uses [French government dataset on rivers activity](https://www.data
 It is available for the following French cities:
 [Lille](https://can-we-row.herokuapp.com/lille/E381126501),
 [Amiens](https://can-we-row.herokuapp.com/amiens/E640091001),
-[Caen](https://can-we-row.herokuapp.com/caen/I374101001),
-[Rouen](https://can-we-row.herokuapp.com/rouen/H503011001),
 [Paris](https://can-we-row.herokuapp.com/paris/F700000103),
 [Châlons-en-Champagne](https://can-we-row.herokuapp.com/chalons/H520101003),
 [Metz](https://can-we-row.herokuapp.com/metz/A743061001),
 [Strasbourg](https://can-we-row.herokuapp.com/strasbourg/A061005051),
 [Rennes](https://can-we-row.herokuapp.com/rennes/J709063002),
-[Nantes](https://can-we-row.herokuapp.com/nantes/M800001010),
 [Orléans](https://can-we-row.herokuapp.com/orleans/K435001010),
 [Poitiers](https://can-we-row.herokuapp.com/poitiers/L250161001),
 [Limoges](https://can-we-row.herokuapp.com/limoges/L040061002),
 [Clermont-Ferrand](https://can-we-row.herokuapp.com/clermont/K322201001),
 [Dijon](https://can-we-row.herokuapp.com/dijon/U132401001),
 [Besançon](https://can-we-row.herokuapp.com/besancon/U251542001),
-[Lyon](https://can-we-row.herokuapp.com/lyon/U472002001),
-[Bordeaux](https://can-we-row.herokuapp.com/bordeaux/O972001001),
-[Toulouse](https://can-we-row.herokuapp.com/toulouse/O200004001)
 [Montpellier](https://can-we-row.herokuapp.com/montpellier/Y321001001),
 [Marseille](https://can-we-row.herokuapp.com/marseille/Y442404001).
 
@@ -147,11 +141,9 @@ kill -HUP [pid]
 ### Roadmap
 
 - [ ] Investigate on common threshold detection techniques for time series [Engineering statistics handbook](http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4.htm), [Gauss library](https://github.com/fredrick/gauss), , [Netflix RAD](https://medium.com/netflix-techblog/rad-outlier-detection-on-big-data-d6b0494371cc), [Western Electric rules](https://en.wikipedia.org/wiki/Western_Electric_rules)
-- [ ] Build a web interface with [Reason-React](https://reasonml.github.io/reason-react/docs/en/installation.html) or [Elm](http://elm-lang.org), See also [react charts](https://github.com/enaqx/awesome-react#charts)
-  * Set the limit: default 700 m3/s
+- [ ] Build a web interface with [Mavo](https://mavo.io/)
+  * Set the limit: default 500 m3/s
   * Select Day of the week: default Wed and Sat
-  * Select min temperature : 10°C
-  * Provide URLs you can copy paste in your bookmarks
 - [ ] Optional: Use [prophet](https://github.com/facebook/prophet) to forecast conditions
 - [ ] Add more metrics (météo des plages, météo des neiges) and more sports
 - [ ] Add email alerts with custom rules based on thresholds
@@ -170,3 +162,5 @@ kill -HUP [pid]
 * [Marceau Leboeuf - river Alert](https://github.com/MarceauLeboeuf/river_Alert), written in Processing
 * [Ian Malpass - Measure Anything, Measure Everything](https://codeascraft.com/2011/02/15/measure-anything-measure-everything/)
 * [Mavo - A new, approachable way to create Web applications](https://mavo.io/)
+* [Fédération Française d'Aviron](http://avironfrance.fr/pratiquer-aviron/trouver-club/cartographie) : 556 clubs / [events](http://avironfrance.fr/pratiquer-aviron/programmes-federaux/circuit-randon-aviron)
+* [Fédération Française de Canoé-Kayak](http://www.ffck.org/trouver-un-club/), [events](http://www.ffck.org/loisirs/riviere/manifestations/)

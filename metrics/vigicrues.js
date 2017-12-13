@@ -133,7 +133,12 @@ const observations = (CdStationHydro, GrdSerie = 'H', FormatDate = undefined, Fo
 
     const [first, ...rest] = obs.Serie.ObssHydro
     const last = rest.pop()
-    console.log('Vigicrues', `${CdStationHydro} ${obs.Serie.LbStationHydro}`, `got ${obs.Serie.ObssHydro.length} measurements from ${first[0] || first.DtObsHydro} to ${last[0] || last.DtObsHydro}`)
+
+    if (first && last) {
+      console.log('Vigicrues', `${CdStationHydro} ${obs.Serie.LbStationHydro}`, `Got ${obs.Serie.ObssHydro.length} measurements from ${first[0] || first.DtObsHydro} to ${last[0] || last.DtObsHydro}`)
+    } else {
+      console.log('Vigicrues', `${CdStationHydro} ${obs.Serie.LbStationHydro}`, `No measurements available`)
+    }
 
     return obs
   })
