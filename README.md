@@ -10,15 +10,15 @@
   <br>
 </p>
 
-Can we row? Based on water level and weather.
-
-A simple website for rowers to check if they can row based on different time-series metrics (water levels, weather).
+A simple webapp for rowers to check if they can row based on different time-series metrics (water levels, weather).
 
 The project uses [French government dataset on rivers activity](https://www.data.gouv.fr/en/reuses/ca-rame-ou-pas/).
 
 It is available for the following French cities: Amiens, Besançon, Bordeaux, Caen, Châlons-en-Champagne, Clermont-Ferrand, Dijon, Lille, Limoges, Lyon, Marseille, Metz, Montpellier, Nantes, Orléans, Paris, Poitiers, Rennes, Rouen, Strasbourg, Toulouse.
 
-[Open an issue](https://github.com/mycaule/can-we-row/issues) if the data is incorrect or if you want [your city to appear on the list](https://github.com/mycaule/can-we-row/issues/1). You can also check [the roadmap for this application](#user-content-roadmap). I hope you have lots of fun using it!
+[Open an issue](https://github.com/mycaule/can-we-row/issues) if the data is incorrect or if you want [your city to appear on the list](https://github.com/mycaule/can-we-row/issues/1). You can also check [the roadmap for this application](#user-content-roadmap).
+
+I hope you have lots of fun using it!
 
 ## Setup
 
@@ -121,17 +121,20 @@ kill -HUP [pid]
 
 ## Contributions
 
-[Changes and improvements](https://github.com/mycaule/can-we-row/wiki) are welcome! Feel free to fork and open a pull request into `master`.
+Changes and improvements are welcome! Feel free to fork and open a pull request into `master`.
 
 ### Roadmap
 
-- [ ] Investigate on common threshold detection techniques for time series [Engineering statistics handbook](http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4.htm), [Gauss library](https://github.com/fredrick/gauss), , [Netflix RAD](https://medium.com/netflix-techblog/rad-outlier-detection-on-big-data-d6b0494371cc), [Western Electric rules](https://en.wikipedia.org/wiki/Western_Electric_rules)
+- [ ] UI: [Threshold detection](https://github.com/mycaule/can-we-row/wiki/Threshold-detection)
+- [ ] UI: Graphing past few days historical data and forecasts for next days
 - [ ] Calendar: Ability to select future day of the week
 - [ ] Calendar: Ability to rate and comment past hikes though FB comments
-- [ ] Optional: Use [prophet](https://github.com/facebook/prophet) to forecast conditions
-- [ ] Add more metrics (météo des plages, météo des neiges) and more sports
-- [ ] Add email alerts with custom rules based on thresholds
-- [ ] Is [Graphite](https://github.com/graphite-project/graphite-web) or [InfluxDB](https://www.influxdata.com/time-series-platform/influxdb/) better for that task ?
+- [ ] Data quality: Add more metrics (météo des plages, météo des neiges)
+- [ ] Purpose: Investigate about Kayak and also river sports events
+- [ ] Alert: Add email alerts with custom rules based on thresholds
+- [ ] Time series: which one is [the best for our usecase](https://github.com/mycaule/can-we-row/wiki/Time-series-aggregation)
+- [ ] Migration: from LowDB to another DB
+- [ ] Cartography: provide information [on local map](https://github.com/mycaule/can-we-row/wiki/Cartography)
 
 ### License
 
@@ -139,14 +142,18 @@ kill -HUP [pid]
 
 ## References
 
+### Data sources
 * [Vigicrues](https://www.vigicrues.gouv.fr), [Terms of use](https://www.data.gouv.fr/fr/datasets/hauteurs-deau-et-debits-des-cours-deau-observes-en-temps-reel-aux-stations-du-reseau-vigicrues/)
-* [Banque Hydro](http://hydro.eaufrance.fr/selection.php?consulte=rechercher), historical data from 1900 to nowadays
-* [Repères de crues](www.reperesdecrues.developpement-durable.gouv.fr)
 * [Vigilance Meteo France](https://vigilance.meteofrance.com/)
 * [Dark Sky API](https://darksky.net/dev/docs)
+* [Banque Hydro](http://hydro.eaufrance.fr/selection.php?consulte=rechercher), historical data from 1900 to nowadays
+* [Repères de crues](www.reperesdecrues.developpement-durable.gouv.fr)
+
+### Application
 * [Prometheus](https://github.com/prometheus/prometheus)
 * [Marceau Leboeuf - river Alert](https://github.com/MarceauLeboeuf/river_Alert), written in Processing
-* [Ian Malpass - Measure Anything, Measure Everything](https://codeascraft.com/2011/02/15/measure-anything-measure-everything/)
 * [Mavo - A new, approachable way to create Web applications](https://mavo.io/)
+
+### Usability
 * [Fédération Française d'Aviron](http://avironfrance.fr/pratiquer-aviron/trouver-club/cartographie) : 556 clubs / [events](http://avironfrance.fr/pratiquer-aviron/programmes-federaux/circuit-randon-aviron)
 * [Fédération Française de Canoé-Kayak](http://www.ffck.org/trouver-un-club/), [events](http://www.ffck.org/loisirs/riviere/manifestations/)
