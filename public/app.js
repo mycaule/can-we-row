@@ -1,4 +1,4 @@
-/* global moment, Mavo */
+/* global moment, Mavo, v */
 
 const findStation = city => {
   switch (city) {
@@ -90,11 +90,12 @@ if (city === null || station === null) {
             reloadMetrics(city, station)()
           } else {
             const curr = data.find(elt => elt.city === city)
-            $('.temperature').textContent = `${curr.meas.temperature.toFixed(1)} °C, ${curr.summary} ${curr.icon}`
+            $('.temperature').textContent = `${v.lowerCase(curr.summary)}, ${curr.meas.temperature.toFixed(1)} °C`
 
-            $('.temperature-time').textContent = `Humid. ${(curr.meas.humidity * 100).toFixed(0)} %, ${curr.meas.pressure.toFixed(0)} hPa, Vent ${curr.meas.windSpeed.toFixed(1)} km/h, ${moment.unix(curr.time / 1000).lang('fr').fromNow()}`
+            $('.temperature-time').textContent = `Humid. ${(curr.meas.humidity * 100).toFixed(0)} %, Press. ${curr.meas.pressure.toFixed(0)} hPa, Vent ${curr.meas.windSpeed.toFixed(1)} km/h, ${moment.unix(curr.time / 1000).lang('fr').fromNow()}`
 
             $('input[property=\'temperature\']').setAttribute('value', curr.meas.temperature)
+            $('input[property=\'icon\']').setAttribute('value', curr.icon)
             console.log(curr)
           }
         })

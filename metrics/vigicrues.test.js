@@ -4,8 +4,8 @@ const vigicrues = require('./vigicrues')
 
 test('stations', async t => {
   const stations = await vigicrues.stations()
-  t.is(stations.Observations.NbElements, 1746)
-  t.is(stations.PasObservations.NbElements, 29)
+  t.is(stations.Observations.NbElements, 1747)
+  t.is(stations.PasObservations.NbElements, 28)
   t.is(stations.VersionFlux, 'Beta 0.3')
 })
 
