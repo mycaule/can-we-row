@@ -16,24 +16,9 @@ A simple website for rowers to check if they can row based on different time-ser
 
 The project uses [French government dataset on rivers activity](https://www.data.gouv.fr/en/reuses/ca-rame-ou-pas/).
 
-It is available for the following French cities:
-[Lille](https://can-we-row.herokuapp.com/lille/E381126501),
-[Amiens](https://can-we-row.herokuapp.com/amiens/E640091001),
-[Paris](https://can-we-row.herokuapp.com/paris/F700000103),
-[Châlons-en-Champagne](https://can-we-row.herokuapp.com/chalons/H520101003),
-[Metz](https://can-we-row.herokuapp.com/metz/A743061001),
-[Strasbourg](https://can-we-row.herokuapp.com/strasbourg/A061005051),
-[Rennes](https://can-we-row.herokuapp.com/rennes/J709063002),
-[Orléans](https://can-we-row.herokuapp.com/orleans/K435001010),
-[Poitiers](https://can-we-row.herokuapp.com/poitiers/L250161001),
-[Limoges](https://can-we-row.herokuapp.com/limoges/L040061002),
-[Clermont-Ferrand](https://can-we-row.herokuapp.com/clermont/K322201001),
-[Dijon](https://can-we-row.herokuapp.com/dijon/U132401001),
-[Besançon](https://can-we-row.herokuapp.com/besancon/U251542001),
-[Montpellier](https://can-we-row.herokuapp.com/montpellier/Y321001001),
-[Marseille](https://can-we-row.herokuapp.com/marseille/Y442404001).
+It is available for the following French cities: Amiens, Besançon, Bordeaux, Caen, Châlons-en-Champagne, Clermont-Ferrand, Dijon, Lille, Limoges, Lyon, Marseille, Metz, Montpellier, Nantes, Orléans, Paris, Poitiers, Rennes, Rouen, Strasbourg, Toulouse.
 
-[Open an issue](https://github.com/mycaule/can-we-row/issues) if the data is incorrect or if you want your city to appear on the list.
+[Open an issue](https://github.com/mycaule/can-we-row/issues) if the data is incorrect or if you want [your city to appear on the list](https://github.com/mycaule/can-we-row/issues/1). You can also check [the roadmap for this application](#user-content-roadmap). I hope you have lots of fun using it!
 
 ## Setup
 
@@ -141,9 +126,8 @@ kill -HUP [pid]
 ### Roadmap
 
 - [ ] Investigate on common threshold detection techniques for time series [Engineering statistics handbook](http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4.htm), [Gauss library](https://github.com/fredrick/gauss), , [Netflix RAD](https://medium.com/netflix-techblog/rad-outlier-detection-on-big-data-d6b0494371cc), [Western Electric rules](https://en.wikipedia.org/wiki/Western_Electric_rules)
-- [ ] Build a web interface with [Mavo](https://mavo.io/)
-  * Set the limit: default 500 m3/s
-  * Select Day of the week: default Wed and Sat
+- [ ] Calendar: Ability to select future day of the week
+- [ ] Calendar: Ability to rate and comment past hikes though FB comments
 - [ ] Optional: Use [prophet](https://github.com/facebook/prophet) to forecast conditions
 - [ ] Add more metrics (météo des plages, météo des neiges) and more sports
 - [ ] Add email alerts with custom rules based on thresholds
@@ -156,6 +140,8 @@ kill -HUP [pid]
 ## References
 
 * [Vigicrues](https://www.vigicrues.gouv.fr), [Terms of use](https://www.data.gouv.fr/fr/datasets/hauteurs-deau-et-debits-des-cours-deau-observes-en-temps-reel-aux-stations-du-reseau-vigicrues/)
+* [Banque Hydro](http://hydro.eaufrance.fr/selection.php?consulte=rechercher), historical data from 1900 to nowadays
+* [Repères de crues](www.reperesdecrues.developpement-durable.gouv.fr)
 * [Vigilance Meteo France](https://vigilance.meteofrance.com/)
 * [Dark Sky API](https://darksky.net/dev/docs)
 * [Prometheus](https://github.com/prometheus/prometheus)

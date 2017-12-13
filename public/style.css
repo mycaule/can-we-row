@@ -21,90 +21,104 @@ main {
   background: hsl(0,0%,96%);
 }
 
-  .inputs > label {
-    flex: 1;
-    padding: 1em;
-    margin: 0 .5em;
-    color: rgba(0,0,0,.6);
-    font-size: 80%;
-  }
+.inputs > label {
+  flex: 1;
+  padding: 1em;
+  margin: 0 .5em;
+  color: rgba(0,0,0,.6);
+  font-size: 80%;
+}
 
-  .inputs input {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    font-size: 160%;
-    background: transparent;
-    padding: .2em 0;
-    border: none;
-    border-bottom: 1px solid rgba(0,0,0,.4);
-    color: black;
-    outline: none;
-  }
+.inputs input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 160%;
+  background: transparent;
+  padding: .2em 0;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.4);
+  color: black;
+  outline: none;
+}
 
-    .inputs input:focus {
-      border-bottom-color: rgba(0,0,0,.8);
-    }
-
+.inputs input:focus {
+  border-bottom-color: rgba(0,0,0,.8);
+}
 
 .outputs {
   padding: 1rem 2em;
   font-size: 80%;
 }
 
-  .outputs > div {
-    display: flex;
-    margin: .8em 0;
-    align-items: baseline;
-  }
+.outputs > div {
+  display: flex;
+  margin: .8em 0;
+  align-items: baseline;
+}
 
-  .total {
-    color: rgba(0,0,0,.5);
-  }
+.report-title {
+  font-weight: bold;
+}
 
-    .outputs > div span {
-      display: inline-block;
-      margin-left: auto;
-    }
+.report-title-annotation {
+  font-size: 70%;
+}
 
-  .amazing {
-    color: hsl(80, 80%, 40%);
-    font-weight: bold;
-    text-align: right;
-  }
+.total {
+  color: rgba(0,0,0,.5);
+}
 
-  .danger {
-    color: hsl(16, 80%, 40%);
-    font-weight: bold;
-    text-align: right;
-  }
+.total-annotation {
+  color: rgba(0,0,0,.5);
+  font-size: 70%;
+}
 
-  .amazing2 {
-    color: hsl(80, 80%, 40%);
-    font-weight: bold;
-    font-size: 80%;
-    text-align: right;
-  }
+.outputs > div span {
+  display: inline-block;
+  margin-left: auto;
+}
 
-  .warn2 {
-    color: hsl(45, 92%, 57%);
-    font-weight: bold;
-    font-size: 80%;
-    text-align: right;
-  }
+.amazing {
+  color: hsl(80, 80%, 40%);
+  font-weight: bold;
+  text-align: right;
+}
 
-  .danger2 {
-    color: hsl(16, 80%, 40%);
-    font-weight: bold;
-    font-size: 80%;
-    text-align: right;
-  }
+.danger {
+  color: hsl(16, 80%, 40%);
+  font-weight: bold;
+  text-align: right;
+}
 
-  .payment {
-    display: inline-block;
-    font-size: 180%;
-  }
+.amazing-annotation {
+  color: hsl(80, 80%, 40%);
+  font-weight: bold;
+}
 
-    .payment::before {
-      content: "$"
-    }
+.warn-annotation {
+  color: hsl(45, 92%, 57%);
+  font-weight: bold;
+}
+
+.danger-annotation {
+  color: hsl(16, 80%, 40%);
+  font-weight: bold;
+}
+
+.payment {
+  display: inline-block;
+  font-size: 180%;
+}
+
+.payment::before {
+  content: "$"
+}
+
+.status-icon {
+  color: hsl(80, 80%, 40%);
+  width: 13px;
+  height: 14px;
+  line-height: 0;
+  margin-right: .3rem;
+}

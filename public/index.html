@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-
-<meta charset="UTF-8">
-<title>Can We Row</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
-<script src="https://dev.mavo.io/dist/mavo.js"></script>
-<link rel="stylesheet" href="style.css">
-
+  <meta charset="utf-8">
+  <title>Can We Row</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div id="fb-root"></div>
   <script>
@@ -41,28 +39,36 @@
     </div>
 
     <div class="outputs">
-      <span class="current-date">Relevé du</span>
-      <a class="refresh-data" href="#">Rafraichir</a><br>
+      <div class="report-title">
+        <div class="current-date"></div>
+        <span class="report-title-annotation"><a class="refresh-data" href="#">Rafraichir</a></span>
+      </div>
 
       <div class="total">Débit d'eau <span class="water-level"></span></div>
-      <div class="danger2" style="display: [iff(level > 500, block, none)]">toute sortie en aviron est interdite</div>
-      <div class="warn2" style="display: [iff(500 >= level && level > levelMax, block, none)]">navigation en yolette uniquement</div>
-      <div class="amazing2" style="display: [iff(level <= levelMax, block, none)]">ok</div>
+      <div class="total-annotation">
+        <div class="danger-annotation" style="display: [iff(level > 500, block, none)]">toute sortie en aviron est interdite</div>
+        <div class="warn-annotation" style="display: [iff(500 >= level && level > levelMax, block, none)]"><span>navigation en yolette uniquement</span></div>
+        <div class="amazing-annotation" style="display: [iff(level <= levelMax, block, none)]">ok</div>
+        <span class="water-level-time"></span>
+      </div>
 
       <div class="total">Température <span class="temperature"></span></div>
-      <div class="danger2" style="display: [iff(temperature < 2, block, none)]">sortie déconseillée</div>
-      <div class="warn2" style="display: [iff(2 <= temperature && temperature < temperatureMin, block, none)]">température faible</div>
-      <div class="amazing2" style="display: [iff(temperatureMin <= temperature, block, none)]">ok</div>
+      <div class="total-annotation">
+        <div class="danger-annotation" style="display: [iff(temperature < 2, block, none)]">sortie déconseillée</div>
+        <div class="warn-annotation" style="display: [iff(2 <= temperature && temperature < temperatureMin, block, none)]">température faible</div>
+        <div class="amazing-annotation" style="display: [iff(temperatureMin <= temperature, block, none)]">ok</div>
+        <span class="temperature-time"></span>
+      </div>
 
-      <div class="danger" style="display: [iff(level > 500, block, none)]">toute sortie en aviron est interdite</div>
-      <div class="amazing" style="display: [iff(temperatureMin <= temperature && level < levelMax, block, none)]">Les conditions sont idéales</div>
+      <div class="danger" style="display: [iff(level > 500, block, none)]">Sortie interdite</div>
+      <div class="amazing" style="display: [iff(temperatureMin <= temperature && level < levelMax, block, none)]">Conditions idéales</div>
     </div>
     <div class="outputs">
       <a href="/lille/E381126501">Lille</a>,
       <a href="/amiens/E640091001">Amiens</a>
       <br>
-      <a href="/caen/I374101001"><i>Caen</i></a>,
-      <a href="/rouen/H503011001"><i>Rouen</i></a>,
+      <a href="/caen/I362101001">Caen</a>,
+      <a href="/rouen/H438021010">Rouen</a>,
       <a href="/paris/F700000103">Paris</a>,
       <a href="/chalons/H520101003">Châlons-en-Champagne</a>
       <br>
@@ -70,7 +76,7 @@
       <a href="/strasbourg/A061005051">Strasbourg</a>
       <br>
       <a href="/rennes/J709063002">Rennes</a>,
-      <a href="/nantes/M800001010"><i>Nantes</i></a>,
+      <a href="/nantes/M530001010">Nantes</a>,
       <a href="/orleans/K435001010">Orléans</a>,
       <a href="/poitiers/L250161001">Poitiers</a>,
       <a href="/limoges/L040061002">Limoges</a>,
@@ -78,21 +84,23 @@
       <br>
       <a href="/dijon/U132401001">Dijon</a>,
       <a href="/besancon/U251542001">Besançon</a>,
-      <a href="/lyon/U472002001"><i>Lyon</i></a>
+      <a href="/lyon/V163002002">Lyon</a>
       <br>
-      <a href="/bordeaux/O972001001"><i>Bordeaux</i></a>,
-      <a href="/toulouse/O200004001"><i>Toulouse</i></a>
+      <a href="/bordeaux/O919001001">Bordeaux</a>,
+      <a href="/toulouse/O200001001">Toulouse</a>
       <br>
       <a href="/montpellier/Y321001001">Montpellier</a>,
       <a href="/marseille/Y442404001">Marseille</a>
       <br><br>
-      <a href="https://github.com/mycaule/can-we-row/issues">Ajouter ma ville</a>
+      <a href="https://github.com/mycaule/can-we-row/issues/1">Ajouter ma ville</a>
     </div>
   </main>
 
   <p>
   <div class="fb-comments" data-href="https://can-we-row.herokuapp.com/" data-numposts="5"></div>
 
+  <script src="https://dev.mavo.io/dist/mavo.js"></script>
+  <script src="app.js"></script>
   <script src="https://vocajs.com/scripts/voca.js"></script>
   <script src="https://momentjs.com/downloads/moment.min.js"></script>
   <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>

@@ -30,8 +30,9 @@ if (city === null || station === null) {
             reloadMetrics(city, station)()
           } else {
             const curr = data.find(elt => elt.city === city)
-            $('.title').textContent += ` pour ${v.titleCase(curr.city)}`
-            $('.temperature').textContent = `${curr.meas.toFixed(1)} °C (${moment.unix(curr.time / 1000).lang('fr').fromNow()})`
+            $('.title').textContent += ` à ${v.titleCase(curr.city)}`
+            $('.temperature').textContent = `${curr.meas.toFixed(1)} °C`
+            $('.temperature-time').textContent = moment.unix(curr.time / 1000).lang('fr').fromNow()
 
             $('input[property=\'temperature\']').setAttribute('value', curr.meas)
             console.log(curr)
@@ -51,7 +52,8 @@ if (city === null || station === null) {
             $('.water-level').textContent = `Aucune mesure de débit`
           } else {
             const curr = data.find(elt => elt.station === station)
-            $('.water-level').textContent = `${curr.meas.toFixed(1)} m³/s (${moment.unix(curr.time / 1000).lang('fr').fromNow()})`
+            $('.water-level').textContent = `${curr.meas.toFixed(1)} m³/s`
+            $('.water-level-time').textContent = moment.unix(curr.time / 1000).lang('fr').fromNow()
             $('input[property=\'level\']').setAttribute('value', curr.meas)
             $('.current-date').textContent += ` ${moment().lang('fr').format('ll')}`
             console.log(curr)
