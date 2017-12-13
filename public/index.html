@@ -20,10 +20,36 @@
     }(document, 'script', 'facebook-jssdk'));
   </script>
 
-  <main mv-app mv-storage="local" mv-autosave="0" mv-bar="none">
+  <main mv-app mv-storage="local" mv-bar="edit">
     <a href="https://github.com/mycaule/can-we-row"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
 
-    <h1 class="title">Conditions extérieures</h1>
+    <h1>Conditions extérieures à
+      <select id="cities" property="city">
+        <option value="amiens">Amiens</option>
+        <option value="besancon">Besançon</option>
+        <option value="bordeaux">Bordeaux</option>
+        <option value="caen">Caen</option>
+        <option value="chalons">Châlons-en-Champagne</option>
+        <option value="clermont">Clermont-Ferrand</option>
+        <option value="dijon">Dijon</option>
+        <option value="lille">Lille</option>
+        <option value="limoges">Limoges</option>
+        <option value="lyon">Lyon</option>
+        <option value="marseille">Marseille</option>
+        <option value="metz">Metz</option>
+        <option value="montpellier">Montpellier</option>
+        <option value="nantes">Nantes</option>
+        <option value="orleans">Orléans</option>
+        <option value="paris">Paris</option>
+        <option value="poitiers">Poitiers</option>
+        <option value="rennes">Rennes</option>
+        <option value="rouen">Rouen</option>
+        <option value="strasbourg">Strasbourg</option>
+        <option value="toulouse">Toulouse</option>
+      </select>
+    </h1>
+
+    [onchange(city)]
 
     <div class="inputs">
       <label>
@@ -46,64 +72,30 @@
 
       <div class="total">Débit d'eau <span class="water-level"></span></div>
       <div class="total-annotation">
-        <div class="danger-annotation" style="display: [iff(level > 500, block, none)]">toute sortie en aviron est interdite</div>
-        <div class="warn-annotation" style="display: [iff(500 >= level && level > levelMax, block, none)]"><span>navigation en yolette uniquement</span></div>
-        <div class="amazing-annotation" style="display: [iff(level <= levelMax, block, none)]">ok</div>
+        <div class="danger-annotation" style="display: [iff(level > 500, block, none)]">Toute sortie est interdite</div>
+        <div class="warn-annotation" style="display: [iff(500 >= level && level > levelMax, block, none)]"><span>Navigation en yolette uniquement</span></div>
+        <div class="amazing-annotation" style="display: [iff(level <= levelMax, block, none)]">Ok</div>
         <span class="water-level-time"></span>
       </div>
 
       <div class="total">Température <span class="temperature"></span></div>
       <div class="total-annotation">
-        <div class="danger-annotation" style="display: [iff(temperature < 2, block, none)]">sortie déconseillée</div>
-        <div class="warn-annotation" style="display: [iff(2 <= temperature && temperature < temperatureMin, block, none)]">température faible</div>
-        <div class="amazing-annotation" style="display: [iff(temperatureMin <= temperature, block, none)]">ok</div>
+        <div class="danger-annotation" style="display: [iff(temperature < 2, block, none)]">Sortie déconseillée</div>
+        <div class="warn-annotation" style="display: [iff(2 <= temperature && temperature < temperatureMin, block, none)]">Température faible</div>
+        <div class="amazing-annotation" style="display: [iff(temperatureMin <= temperature, block, none)]">Ok</div>
         <span class="temperature-time"></span>
       </div>
 
       <div class="danger" style="display: [iff(level > 500, block, none)]">Sortie interdite</div>
       <div class="amazing" style="display: [iff(temperatureMin <= temperature && level < levelMax, block, none)]">Conditions idéales</div>
     </div>
-    <div class="outputs">
-      <a href="/lille/E381126501">Lille</a>,
-      <a href="/amiens/E640091001">Amiens</a>
-      <br>
-      <a href="/caen/I362101001">Caen</a>,
-      <a href="/rouen/H438021010">Rouen</a>,
-      <a href="/paris/F700000103">Paris</a>,
-      <a href="/chalons/H520101003">Châlons-en-Champagne</a>
-      <br>
-      <a href="/metz/A743061001">Metz</a>,
-      <a href="/strasbourg/A061005051">Strasbourg</a>
-      <br>
-      <a href="/rennes/J709063002">Rennes</a>,
-      <a href="/nantes/M530001010">Nantes</a>,
-      <a href="/orleans/K435001010">Orléans</a>,
-      <a href="/poitiers/L250161001">Poitiers</a>,
-      <a href="/limoges/L040061002">Limoges</a>,
-      <a href="/clermont/K322201001">Clermont-Ferrand</a>
-      <br>
-      <a href="/dijon/U132401001">Dijon</a>,
-      <a href="/besancon/U251542001">Besançon</a>,
-      <a href="/lyon/V163002002">Lyon</a>
-      <br>
-      <a href="/bordeaux/O919001001">Bordeaux</a>,
-      <a href="/toulouse/O200001001">Toulouse</a>
-      <br>
-      <a href="/montpellier/Y321001001">Montpellier</a>,
-      <a href="/marseille/Y442404001">Marseille</a>
-      <br><br>
-      <a href="https://github.com/mycaule/can-we-row/issues/1">Ajouter ma ville</a>
-    </div>
-  </main>
 
-  <p>
-  <div class="fb-comments" data-href="https://can-we-row.herokuapp.com/" data-numposts="5"></div>
+    <div class="fb-comments" data-href="https://can-we-row.herokuapp.com/" data-numposts="5"></div>
+  </main>
 
   <script src="https://dev.mavo.io/dist/mavo.js"></script>
   <script src="app.js"></script>
-  <script src="https://vocajs.com/scripts/voca.js"></script>
   <script src="https://momentjs.com/downloads/moment.min.js"></script>
   <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>
