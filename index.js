@@ -85,7 +85,7 @@ low(adapter).then(db => {
         db.get('historic.hauteurs').upsert(arr, 'station', 'time').write()
 
         if (last) {
-          db.get('current.hauteurs').upsert([{station, time: last.DtObsHydro, meas: last.ResObsHydro}], 'station').write()
+          db.get('current.hauteurs').upsert([{station, label: vig.Serie.LbStationHydro, time: last.DtObsHydro, meas: last.ResObsHydro}], 'station').write()
           Hauteurs.labels(station).set(last.ResObsHydro, last.DtObsHydro)
         }
       })
@@ -114,7 +114,7 @@ low(adapter).then(db => {
         db.get('historic.debits').upsert(arr, 'station', 'time').write()
 
         if (last) {
-          db.get('current.debits').upsert([{station, time: last.DtObsHydro, meas: last.ResObsHydro}], 'station').write()
+          db.get('current.debits').upsert([{station, label: vig.Serie.LbStationHydro, time: last.DtObsHydro, meas: last.ResObsHydro}], 'station').write()
           Debits.labels(station).set(last.ResObsHydro, last.DtObsHydro)
         }
       })
@@ -144,10 +144,32 @@ low(adapter).then(db => {
         Temperatures.labels(city).set(curr.temperature, curr.time * 1000)
 
         const hourly = dark.hourly
-        db.get('current.temperatures').upsert([{city, time: curr.time * 1000, meas: curr.temperature}], 'city').write()
+        db.get('current.temperatures').upsert([{
+          city,
+          time: curr.time * 1000,
+          summary: curr.summary,
+          icon: curr.icon,
+          meas: {
+            temperature: curr.temperature,
+            humidity: curr.humidity,
+            pressure: curr.pressure,
+            windSpeed: curr.windSpeed
+          }
+        }], 'city').write()
 
         const arr = hourly.data.map(meas => {
-          return {city, time: meas.time * 1000, meas: meas.temperature}
+          return {
+            city,
+            time: meas.time * 1000,
+            summary: meas.summary,
+            icon: meas.icon,
+            meas: {
+              temperature: meas.temperature,
+              humidity: meas.humidity,
+              pressure: meas.pressure,
+              windSpeed: meas.windSpeed
+            }
+          }
         })
 
         db.get('historic.temperatures').upsert(arr, 'city', 'time').write()

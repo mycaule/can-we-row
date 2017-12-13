@@ -90,10 +90,11 @@ if (city === null || station === null) {
             reloadMetrics(city, station)()
           } else {
             const curr = data.find(elt => elt.city === city)
-            $('.temperature').textContent = `${curr.meas.toFixed(1)} °C`
-            $('.temperature-time').textContent = moment.unix(curr.time / 1000).lang('fr').fromNow()
+            $('.temperature').textContent = `${curr.meas.temperature.toFixed(1)} °C, ${curr.summary} ${curr.icon}`
 
-            $('input[property=\'temperature\']').setAttribute('value', curr.meas)
+            $('.temperature-time').textContent = `Humid. ${(curr.meas.humidity * 100).toFixed(0)} %, ${curr.meas.pressure.toFixed(0)} hPa, Vent ${curr.meas.windSpeed.toFixed(1)} km/h, ${moment.unix(curr.time / 1000).lang('fr').fromNow()}`
+
+            $('input[property=\'temperature\']').setAttribute('value', curr.meas.temperature)
             console.log(curr)
           }
         })
@@ -112,7 +113,7 @@ if (city === null || station === null) {
           } else {
             const curr = data.find(elt => elt.station === station)
             $('.water-level').textContent = `${curr.meas.toFixed(1)} m³/s`
-            $('.water-level-time').textContent = moment.unix(curr.time / 1000).lang('fr').fromNow()
+            $('.water-level-time').textContent = `à ${curr.label}, ${moment.unix(curr.time / 1000).lang('fr').fromNow()}`
             $('input[property=\'level\']').setAttribute('value', curr.meas)
             $('.current-date').textContent += ` ${moment().lang('fr').format('ll')}`
             console.log(curr)
