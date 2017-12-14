@@ -1,93 +1,5 @@
 /* global moment, Mavo, v */
 
-const availableCities = [
-  {
-    city: 'amiens',
-    label: 'Amiens',
-    stations: ['E640091001']
-  }, {
-    city: 'besancon',
-    label: 'Besançon',
-    stations: ['U251542001']
-  }, {
-    city: 'bordeaux',
-    label: 'Bordeaux',
-    stations: ['O919001001']
-  }, {
-    city: 'caen',
-    label: 'Caen',
-    stations: ['I362101001']
-  }, {
-    city: 'chalons',
-    label: 'Châlons-en-Champagne',
-    stations: ['H520101003']
-  }, {
-    city: 'clermont',
-    label: 'Clermont-Ferrand',
-    stations: ['K322201001']
-  }, {
-    city: 'dijon',
-    label: 'Dijon',
-    stations: ['U132401001']
-  }, {
-    city: 'lille',
-    label: 'Lille',
-    stations: ['E381126501']
-  }, {
-    city: 'limoges',
-    label: 'Limoges',
-    stations: ['L040061002']
-  }, {
-    city: 'lyon',
-    label: 'Lyon',
-    stations: ['V163002002']
-  }, {
-    city: 'marseille',
-    label: 'Marseille',
-    stations: ['Y442404001']
-  }, {
-    city: 'metz',
-    label: 'Metz',
-    stations: ['A743061001']
-  }, {
-    city: 'montpellier',
-    label: 'Montpellier',
-    stations: ['Y321001001']
-  }, {
-    city: 'nantes',
-    label: 'Nantes',
-    stations: ['M530001010']
-  }, {
-    city: 'orleans',
-    label: 'Orléans',
-    stations: ['K435001010']
-  }, {
-    city: 'paris',
-    label: 'Paris',
-    stations: ['F700000103']
-  }, {
-    city: 'poitiers',
-    label: 'Poitiers',
-    stations: ['L250161001']
-  }, {
-    city: 'rennes',
-    label: 'Rennes',
-    stations: ['J709063002']
-  }, {
-    city: 'rouen',
-    label: 'Rouen',
-    stations: ['H438021010']
-  }, {
-    city: 'strasbourg',
-    label: 'Strasbourg',
-    stations: ['A061005051']
-  }, {
-    city: 'toulouse',
-    label: 'Toulouse',
-    stations: ['O200001001']
-  }
-]
-
 const getCitiesRef = () => fetch(`/data/cities`).then(res => {
   if (res.ok) {
     return res.json()
@@ -111,20 +23,23 @@ const searchParams = () => {
 }
 
 Mavo.Functions.changeDateTime = newDateTime => {
-  console.log('--changeDateTime')
-  console.log(newDateTime)
+  if (newDateTime) {
+    console.log('--changeDateTime')
+    console.log(newDateTime)
+  }
   return newDateTime
 }
 
 Mavo.Functions.changeCity = newCity => {
-  console.log('--changeCity')
-  console.log(newCity)
-  const {city} = searchParams()
+  if (newCity) {
+    console.log('--changeCity')
+    const {city} = searchParams()
 
-  if (newCity === city) {
-    console.log('staying here!')
-  } else {
-    window.location.href = linkTo(newCity, availableCities)
+    if (newCity !== city) {
+      getCitiesRef().then(cities => {
+        window.location.href = linkTo(newCity, cities)
+      })
+    }
   }
 
   return newCity
@@ -145,8 +60,8 @@ const reloadMetrics = (city, station) => () =>
   })
 
 const setOpenGraphHeaders = (city, station) => {
-  $('meta[property=\'og:url\']').setAttribute('content', `https://can-we-row.herokuapp.com/${city}/${station}`)
-  $('meta[property=\'og:description\']').setAttribute('content', `Conditions extérieures à ${v.titleCase(city)} pour l'aviron`)
+  $('meta[property=\'og:url\']').content = `https://can-we-row.herokuapp.com/${city}/${station}`
+  $('meta[property=\'og:description\']').content = `Conditions extérieures à ${v.titleCase(city)} pour l'aviron`
 }
 
 const initHTMLFields = (city, station, citiesRef) => {
@@ -184,12 +99,13 @@ const fillWeatherReport = (city, station) =>
             reloadMetrics(city, station)()
           } else {
             const curr = data.find(elt => elt.city === city)
-            $('.temperature').textContent = `${v.lowerCase(curr.summary)}, ${curr.meas.temperature.toFixed(1)} °C`
+            $('.temperature').textContent = `${curr.meas.temperature.toFixed(1)} °C | ${curr.meas.windSpeed.toFixed(1)} km/h`
 
-            $('.temperature-time').textContent = `Humid. ${(curr.meas.humidity * 100).toFixed(0)} %, Press. ${curr.meas.pressure.toFixed(0)} hPa, Vent ${curr.meas.windSpeed.toFixed(1)} km/h, ${moment.unix(curr.time / 1000).locale('fr').fromNow()}`
+            $('.temperature-time').textContent = moment.unix(curr.time / 1000).locale('fr').fromNow()
 
-            $('input[property=\'temperature\']').setAttribute('value', curr.meas.temperature)
-            $('input[property=\'icon\']').setAttribute('value', curr.icon)
+            $('input[property=\'temperature\']').value = curr.meas.temperature
+            $('input[property=\'icon\']').value = curr.icon
+            $('input[property=\'summary\']').value = `${v.lowerCase(curr.summary)} | Humid. ${(curr.meas.humidity * 100).toFixed(0)} % | Press. ${curr.meas.pressure.toFixed(0)} hPa`
             console.log(curr)
           }
         })
@@ -209,8 +125,9 @@ const fillWaterReport = station =>
           } else {
             const curr = data.find(elt => elt.station === station)
             $('.water-level').textContent = `${curr.meas.toFixed(1)} m³/s`
-            $('.water-level-time').textContent = `${curr.label}, ${moment.unix(curr.time / 1000).locale('fr').fromNow()}`
-            $('input[property=\'level\']').setAttribute('value', curr.meas)
+            $('.water-level-time').textContent = moment.unix(curr.time / 1000).locale('fr').fromNow()
+            $('input[property=\'stationLabel\']').value = curr.label
+            $('input[property=\'level\']').value = curr.meas
             $('time[property=\'datetime\']').setAttribute('datetime', moment().format('YYYY-MM-DD'))
             console.log(curr)
           }

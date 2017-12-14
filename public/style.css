@@ -33,6 +33,7 @@ footer {
   padding-bottom: 1rem;
   background-color: #efefef;
   text-align: center;
+  font-size: 70%;
 }
 
 .inputs {
@@ -82,17 +83,13 @@ footer {
   align-items: baseline;
 }
 
-.report-title {
-  font-weight: bold;
-}
-
 .total {
   color: rgba(0,0,0,.5);
 }
 
 .total-annotation {
   color: rgba(0,0,0,.5);
-  font-size: 70%;
+  font-size: 90%;
 }
 
 .outputs > div span {
@@ -103,13 +100,13 @@ footer {
 .amazing {
   color: hsl(80, 80%, 40%);
   font-weight: bold;
-  text-align: right;
+  text-align: center;
 }
 
 .danger {
   color: hsl(16, 80%, 40%);
   font-weight: bold;
-  text-align: right;
+  text-align: center;
 }
 
 .amazing-annotation {
@@ -145,7 +142,6 @@ footer {
 }
 
 select {
-  display: block;
   box-sizing: border-box;
   background: transparent;
   -webkit-appearance: button;

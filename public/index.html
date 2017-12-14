@@ -25,17 +25,26 @@
   </script>
 
   <header>
-    Bulletin météo Aviron
+    Bulletin météo
+    <select property="activities">
+      <option value="rowing">aviron</option>
+      <option value="canoe">canoe-kayak</option>
+      <option value="barge">pénichette</option>
+    </select>
   </header>
 
   <main>
     <div class="inputs">
       <label>
-        Ville <select property="city"></select>
-        <input type="hidden" value="[changeCity(city)]" property="_changeCity" />
+        Ville <br>
+        <select property="city"></select>
+        <input type="hidden" value="[changeCity(city)]" property="_changeCity"/>
       </label>
       <label>
-        Station hydro <select property="station"></select>
+        Station hydro <br>
+        <select property="station"></select>
+        <a href="https://github.com/mycaule/can-we-row/issues/1" title="ajouter une station">❓</a>
+        <input type="hidden" property="stationLabel" />
       </label>
     </div>
     <div class="inputs">
@@ -44,6 +53,7 @@
         <input type="number" step="0.5" value="8" property="temperatureMin" />
         <input type="hidden" property="temperature" />
         <input type="hidden" property="icon" />
+        <input type="hidden" property="summary" />
       </label>
       <label>
         Débit d'eau maxi (m³/s)
@@ -51,7 +61,7 @@
         <input type="hidden" property="level" />
       </label>
       <label>
-        Jour de sortie <time property="datetime" mv-mode="edit"></div>
+        Jour de sortie <time property="datetime" mv-mode="edit"></time>
       </label>
       <input type="hidden" value="[changeDateTime(datetime)]" property="_changeDateTime" />
     </div>
@@ -61,7 +71,7 @@
         Conditions extérieures au [datetime]
       </div>
 
-      <div class="total">Débit d'eau <span class="water-level"></span></div>
+      <div class="total">Bassin [stationLabel] <span class="water-level"></span></div>
       <div class="total-annotation">
         <div class="danger-annotation" style="display: [iff(level > 500, block, none)]">Toute sortie est interdite</div>
         <div class="warn-annotation" style="display: [iff(500 >= level && level > levelMax, block, none)]"><span>Navigation en yolette uniquement</span></div>
@@ -69,7 +79,7 @@
         <span class="water-level-time" mv-expressions="none"></span>
       </div>
 
-      <div class="total">Température <span class="temperature"></span></div>
+      <div class="total">Météo <span class="temperature"></span></div>
       <div class="total-annotation">
         <div class="danger-annotation" style="display: [iff(temperature < 2, block, none)]">Sortie déconseillée</div>
         <div class="warn-annotation" style="display: [iff(2 <= temperature && temperature < temperatureMin, block, none)]">Température faible</div>
@@ -77,10 +87,11 @@
         <span class="temperature-time"></span>
       </div>
 
-      <div class="danger" style="display: [iff(level > 500, block, none)]">Sortie interdite</div>
+      <div class="danger" style="display: [iff(level > 500, block, none)]">
+        <a class="refresh-data"><img srcset="/icons/_[icon].svg" height="100" width="100" title="[summary]"></a><br>
+        Sortie interdite
+      </div>
       <div class="amazing" style="display: [iff(temperatureMin <= temperature && level < levelMax, block, none)]">Conditions idéales</div>
-
-      <center><a class="refresh-data" href="#"><img srcset="/icons/_[icon].svg" height="100" width="100" alt="[icon]"></a></center>
     </div>
   </main>
 
@@ -89,8 +100,12 @@
 
     <div>
       <div class="fb-like" data-href="https://can-we-row.herokuapp.com/[city]/[station]" data-layout="button_count" data-action="recommend" data-size="large" data-show-faces="true" data-share="true"></div>
+    </div>
+    <div>
       <a href="https://github.com/mycaule/can-we-row"><img src="/img/GitHub_Logo.png" height="20"></a>
     </div>
+
+    &copy; 2017 Michel Hua
   </footer>
 
   <script src="https://dev.mavo.io/dist/mavo.es5.min.js"></script>
