@@ -1,0 +1,85 @@
+[{
+  "city": "amiens",
+  "label": "Amiens",
+  "stations": ["E640091001"]
+}, {
+  "city": "besancon",
+  "label": "Besançon",
+  "stations": ["U251542001"]
+}, {
+  "city": "bordeaux",
+  "label": "Bordeaux",
+  "stations": ["O919001001"]
+}, {
+  "city": "caen",
+  "label": "Caen",
+  "stations": ["I362101001"]
+}, {
+  "city": "chalons",
+  "label": "Châlons-en-Champagne",
+  "stations": ["H520101003"]
+}, {
+  "city": "clermont",
+  "label": "Clermont-Ferrand",
+  "stations": ["K322201001"]
+}, {
+  "city": "dijon",
+  "label": "Dijon",
+  "stations": ["U132401001"]
+}, {
+  "city": "lille",
+  "label": "Lille",
+  "stations": ["E381126501"]
+}, {
+  "city": "limoges",
+  "label": "Limoges",
+  "stations": ["L040061002"]
+}, {
+  "city": "lyon",
+  "label": "Lyon",
+  "stations": ["V163002002"]
+}, {
+  "city": "marseille",
+  "label": "Marseille",
+  "stations": ["Y442404001"]
+}, {
+  "city": "metz",
+  "label": "Metz",
+  "stations": ["A743061001"]
+}, {
+  "city": "montpellier",
+  "label": "Montpellier",
+  "stations": ["Y321001001"]
+}, {
+  "city": "nantes",
+  "label": "Nantes",
+  "stations": ["M530001010"]
+}, {
+  "city": "orleans",
+  "label": "Orléans",
+  "stations": ["K435001010"]
+}, {
+  "city": "paris",
+  "label": "Paris",
+  "stations": ["F700000103"]
+}, {
+  "city": "poitiers",
+  "label": "Poitiers",
+  "stations": ["L250161001"]
+}, {
+  "city": "rennes",
+  "label": "Rennes",
+  "stations": ["J709063002"]
+}, {
+  "city": "rouen",
+  "label": "Rouen",
+  "stations": ["H438021010"]
+}, {
+  "city": "strasbourg",
+  "label": "Strasbourg",
+  "stations": ["A061005051"]
+}, {
+  "city": "toulouse",
+  "label": "Toulouse",
+  "stations": ["O200001001"]
+}]

@@ -11,6 +11,8 @@ const darksky = require('./metrics/darksky')
 const app = express()
 const adapter = new FileAsync('db.json')
 
+const availableCities = require('./cities.json')
+
 const Temperatures = new prometheus.Gauge({
   name: 'temperatures',
   help: 'Températures',
@@ -60,6 +62,10 @@ low(adapter).then(db => {
   })
 
   app.use(express.static('public'))
+
+  app.get('/data/cities', (req, res) => {
+    res.json(availableCities)
+  })
 
   app.get('/latest/hauteurs', (req, res) => {
     const stations = makeArray(req.query, 'stations')
@@ -186,7 +192,10 @@ low(adapter).then(db => {
   })
 
   app.get('/:city/:station', (req, res) => {
-    res.redirect(`/?city=${req.params.city}&station=${req.params.station}`)
+    const query = req.query
+    const oldQueryParams = Object.keys(query).map(key => `${key}=${encodeURIComponent(query[key])}`).join('&')
+
+    res.redirect(`/?city=${req.params.city}&station=${req.params.station}&${oldQueryParams}`)
   })
 
   return db.defaults({

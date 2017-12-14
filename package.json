@@ -23,6 +23,7 @@
     "is": "^3.2.1",
     "is-url": "^1.2.2",
     "lowdb": "^1.0.0",
+    "moment": "^2.19.4",
     "prom-client": "^10.2.2",
     "superstruct": "^0.4.6"
   },
@@ -33,13 +34,19 @@
   "xo": {
     "space": true,
     "semicolon": false,
-    "envs": ["node", "browser"]
+    "envs": [
+      "node",
+      "browser"
+    ]
   },
   "ava": {
     "snapshotDir": "snapshots"
   },
   "nodemonConfig": {
-    "ignore": ["*.test.js", "db.json"],
+    "ignore": [
+      "*.test.js",
+      "db.json"
+    ],
     "delay": "2500"
   }
 }

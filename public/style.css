@@ -3,7 +3,9 @@ body {
   font: 120% Helvetica Neue, sans-serif;
 }
 
-h1 {
+header {
+  width: 37rem;
+  box-shadow: 1px 1px 5px rgba(0,0,0,.3);
   padding: 1.5rem;
   margin: 0;
   font: 300 180% Helvetica Neue, sans-serif;
@@ -18,6 +20,19 @@ h2 {
 main {
   width: 40rem;
   box-shadow: 1px 1px 5px rgba(0,0,0,.3);
+}
+
+footer {
+  width: 40rem;
+  box-shadow: 1px 1px 5px rgba(0,0,0,.3);
+  position: relative;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #efefef;
+  text-align: center;
 }
 
 .inputs {
@@ -69,10 +84,6 @@ main {
 
 .report-title {
   font-weight: bold;
-}
-
-.report-title-annotation {
-  font-size: 70%;
 }
 
 .total {
@@ -133,20 +144,36 @@ main {
   margin-right: .3rem;
 }
 
-select#cities {
+select {
+  display: block;
+  box-sizing: border-box;
+  background: transparent;
   -webkit-appearance: button;
   -webkit-border-radius: 2px;
-  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-  -webkit-padding-end: 20px;
-  -webkit-padding-start: 2px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  padding-start: 2px;
+  padding-end: 20px;
   -webkit-user-select: none;
   border: 1px solid #AAA;
   color: #555;
-  font-size: 60%;
+  font-size: 100%;
   margin: 20px;
   overflow: hidden;
   padding: 5px 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 190px;
+}
+
+time {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 160%;
+  background: transparent;
+  padding: .2em 0;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.4);
+  color: black;
+  outline: none;
 }
