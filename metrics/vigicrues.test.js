@@ -3,10 +3,15 @@ import test from 'ava'
 const vigicrues = require('./vigicrues')
 
 test('stations', async t => {
-  const stations = await vigicrues.stations()
-  t.is(stations.Observations.NbElements, 1747)
-  t.is(stations.PasObservations.NbElements, 28)
-  t.is(stations.VersionFlux, 'Beta 0.3')
+  const stationsH = await vigicrues.stations()
+  t.is(stationsH.Observations.NbElements, 1747)
+  t.is(stationsH.PasObservations.NbElements, 28)
+  t.is(stationsH.VersionFlux, 'Beta 0.3')
+
+  const stationsQ = await vigicrues.stations('Q')
+  t.is(stationsQ.Observations.NbElements, 1327)
+  t.is(stationsQ.PasObservations.NbElements, 448)
+  t.is(stationsQ.VersionFlux, 'Beta 0.3')
 })
 
 test('observations', async t => {

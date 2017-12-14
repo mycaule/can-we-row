@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node index.js",
+    "update-stations": "node update-stations.js",
     "test": "xo && ava --verbose"
   },
   "repository": {
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "ava": "^0.24.0",
+    "patriarchy": "^1.0.8",
     "xo": "^0.19.0"
   },
   "xo": {
@@ -45,7 +47,9 @@
   "nodemonConfig": {
     "ignore": [
       "*.test.js",
-      "db.json"
+      "db.json",
+      "stations.json",
+      "cities.json"
     ],
     "delay": "2500"
   }
