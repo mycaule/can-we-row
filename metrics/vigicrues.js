@@ -116,9 +116,10 @@ const vigicrues = axios.create({
   timeout: 3000
 })
 
-const stations = () =>
-  vigicrues.get('/observations.json/')
-    .then(resp => struct.union([Stations, VigiError])(resp.data))
+const stations = (GrdSerie = 'H', FormatDate = undefined, FormatSortie = undefined) =>
+  vigicrues.get('/observations.json/', {
+    params: {GrdSerie, FormatDate, FormatSortie}
+  }).then(resp => struct.union([Stations, VigiError])(resp.data))
 
 const informations = CdStationHydro =>
   vigicrues.get('/station.json/', {

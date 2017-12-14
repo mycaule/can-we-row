@@ -67,6 +67,14 @@ low(adapter).then(db => {
     res.json(availableCities)
   })
 
+  app.get('/data/stations', (req, res) => {
+    vigicrues.stations('Q').then(vig => res.json(vig))
+  })
+
+  app.get('/data/station/:station', (req, res) => {
+    vigicrues.informations(req.params.station).then(vig => res.json(vig))
+  })
+
   app.get('/latest/hauteurs', (req, res) => {
     const stations = makeArray(req.query, 'stations')
     res.json(stations.map(station => db.get('current.hauteurs').find({station}).value()))
