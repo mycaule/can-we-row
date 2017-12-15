@@ -156,7 +156,7 @@ const stations = (GrdSerie = 'H', FormatDate = undefined, FormatSortie = undefin
 const informations = CdStationHydro =>
   vigicrues.get('/station.json/', {
     params: {CdStationHydro}
-  }).then(resp => Informations(resp.data))
+  }).then(resp => struct.union([Informations, VigiError])(resp.data))
 
 const observations = (CdStationHydro, GrdSerie = 'H', FormatDate = undefined, FormatSortie = undefined) =>
   vigicrues.get('/observations.json/index.php', {

@@ -3,7 +3,7 @@
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 
-// Const patriarchy = require('patriarchy')
+const patriarchy = require('patriarchy')
 
 const vigicrues = require('./metrics/vigicrues')
 
@@ -60,47 +60,55 @@ const TODO_LIST = ['E640091001', 'U251542001', 'O919001001', 'I362101001', 'H520
 //     console.log(`wrote ${db.set('stationsH', x).write().stationsH.length} stations H `)
 //   })
 //
-const getInfos = async station => {
+const extractInfos = async station => {
   const {CdStationHydro, LbStationHydro, LbCoursEau, CoordStationHydro, Evenement, CdCommune} = await vigicrues.informations(station)
 
   const x = CoordStationHydro.CoordXStationHydro
   const y = CoordStationHydro.CoordYStationHydro
 
-  console.log({
-    CdStationHydro,
-    LbStationHydro,
-    LbCoursEau,
-    CdCommune,
-    Evenement,
-    coords: toWGS({x, y})
-  })
+  return {
+    station: CdStationHydro,
+    label: LbStationHydro,
+    cours: LbCoursEau,
+    commune: CdCommune,
+    evenement: Evenement,
+    gps: toWGS({x, y})
+  }
 }
 
-const doUpdate = async todo => {
-  const [available, unavailable] = await vigicrues.stations('Q')
+const updateStations = async (todo, vol) => {
+  const [available, unavailable] = await vigicrues.stations(vol)
     .then(res => [
       res.Observations.ListeStation.map(x => x.CdStationHydro),
       res.PasObservations.ListeStation.map(x => x.CdStationHydro)
     ])
 
-  const doing = todo.filter(x => available.includes(x))
+  const [doing, missed] = todo.reduce((a, b) => {
+    a[available.includes(b) ? 0 : 1].push(b)
+    return a
+  }, [[], []])
 
-  const done = await doing.reduce(async (aP, b) => {
-    const a = await aP
-    const infos = await getInfos(b)
-    return [...a, infos]
+  const done = await doing.reduce(async (a, b) => {
+    try {
+      const infos = await extractInfos(b)
+      db.get(`stations${vol}`).push(infos).write()
+      return [...await a, b]
+    } catch (err) {
+      missed.push(b)
+      return a
+    }
   }, Promise.resolve([]))
 
-  console.log(`AVAILABLE: ${available.length}`)
-  console.log(`UNAVAILABLE: ${unavailable.length}`)
   console.log(`------------------------------------`)
-  console.log(`TODO: ${todo.length} stations`)
-  console.log(`DOING: ${doing.length} stations`)
-  console.log(`DONE: ${done.length} stations`)
+  console.log(`Updating for ${vol}`)
+  console.log(`data available: ${available.length}/${available.length + unavailable.length} stations`)
+  console.log(`done: ${done.length}/${todo.length} stations`)
+  console.log((missed.length) ? `MISSED: ${missed.join(', ')}` : '')
+  console.log('SAMPLE:')
+  console.log(patriarchy(db.get(`stations${vol}`).sample().value()))
 }
 
-getInfos('M530001010')
-
-doUpdate(TODO_LIST)
+updateStations(TODO_LIST, 'Q')
+updateStations(TODO_LIST, 'H')
 
 // -TODO Make 1327 + 1747 informations request calls to Vigicrues ! Promise.all or throttle

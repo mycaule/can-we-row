@@ -135,6 +135,7 @@ Changes and improvements are welcome! Feel free to fork and open a pull request 
 - [ ] Time series: which one is [the best for our usecase](https://github.com/mycaule/can-we-row/wiki/Time-series-aggregation)
 - [ ] Migration: from LowDB to another DB
 - [ ] Cartography: provide information [on local map](https://github.com/mycaule/can-we-row/wiki/Cartography)
+- [ ] Errors with `superstruct` [returning-errors](https://github.com/ianstormtaylor/superstruct/blob/master/examples/returning-errors.js), [throwing-errors](https://github.com/ianstormtaylor/superstruct/blob/master/examples/throwing-errors.js), [custom-errors](https://github.com/ianstormtaylor/superstruct/blob/master/examples/custom-errors.js)
 
 ### License
 
