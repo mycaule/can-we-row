@@ -11,7 +11,8 @@ const darksky = require('./metrics/darksky')
 const app = express()
 const adapter = new FileAsync('db.json')
 
-const availableCities = require('./cities.json')
+const citiesRef = require('./cities.json')
+const stationsRef = require('./stations.json')
 
 const Temperatures = new prometheus.Gauge({
   name: 'temperatures',
@@ -64,15 +65,15 @@ low(adapter).then(db => {
   app.use(express.static('public'))
 
   app.get('/data/cities', (req, res) => {
-    res.json(availableCities)
+    res.json(citiesRef)
   })
 
   app.get('/data/stations', (req, res) => {
-    vigicrues.stations('Q').then(vig => res.json(vig))
+    res.json(stationsRef.stationsQ)
   })
 
   app.get('/data/station/:station', (req, res) => {
-    vigicrues.informations(req.params.station).then(vig => res.json(vig))
+    res.json(stationsRef.stationsQ.find(elt => req.params.station === elt.station))
   })
 
   app.get('/latest/hauteurs', (req, res) => {

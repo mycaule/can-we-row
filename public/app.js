@@ -7,6 +7,13 @@ const getCitiesRef = () => fetch(`/data/cities`).then(res => {
   return []
 })
 
+const getStationsRef = () => fetch(`/data/stations`).then(res => {
+  if (res.ok) {
+    return res.json()
+  }
+  return []
+})
+
 const linkTo = (city, citiesRef) => {
   const station = citiesRef.find(elt => elt.city === city).stations[0]
   return station ? `/?city=${city}&station=${station}` : '/'
@@ -66,7 +73,7 @@ const setOpenGraphHeaders = (city, station) => {
   $('meta[property=\'og:description\']').content = `Conditions extérieures à ${v.titleCase(city)} pour l'aviron`
 }
 
-const initHTMLFields = (city, station, citiesRef) => {
+const initHTMLFields = (city, station, citiesRef, stationsRef) => {
   const stations = $('select[property=\'station\']')
   const cities = $('select[property=\'city\']')
 
@@ -78,10 +85,10 @@ const initHTMLFields = (city, station, citiesRef) => {
 
     if (elt.city === city) {
       elt.stations.forEach(sta => {
+        const match = stationsRef.find(elt => elt.station === sta)
         const opt2 = document.createElement('option')
-
-        opt2.text = sta
-        opt2.value = sta
+        opt2.text = match.label
+        opt2.value = match.station
         stations.add(opt2)
       })
     }
@@ -150,7 +157,7 @@ if (city === null || station === null) {
   setOpenGraphHeaders(city, station)
 
   getCitiesRef().then(cities => {
-    initHTMLFields(city, station, cities)
+    getStationsRef(station).then(stations => initHTMLFields(city, station, cities, stations))
     fillWeatherReport(city, station)
     fillWaterReport(station)
   })
