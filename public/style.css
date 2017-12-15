@@ -97,6 +97,14 @@ footer {
   margin-left: auto;
 }
 
+.refresh-data {
+  cursor: pointer;
+}
+
+.help-station {
+  cursor: pointer;
+}
+
 .amazing {
   color: hsl(80, 80%, 40%);
   font-weight: bold;

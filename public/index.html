@@ -43,7 +43,7 @@
       <label>
         Station hydro <br>
         <select property="station"></select>
-        <a href="https://github.com/mycaule/can-we-row/issues/1" title="ajouter une station">❓</a>
+        <span class="help-station" title="ajouter une station">❓</a>
         <input type="hidden" property="stationLabel" />
       </label>
     </div>
@@ -76,7 +76,7 @@
         <div class="danger-annotation" style="display: [iff(level > 500, block, none)]">Toute sortie est interdite</div>
         <div class="warn-annotation" style="display: [iff(500 >= level && level > levelMax, block, none)]"><span>Navigation en yolette uniquement</span></div>
         <div class="amazing-annotation" style="display: [iff(level <= levelMax, block, none)]">Ok</div>
-        <span class="water-level-time" mv-expressions="none"></span>
+        <span class="refresh-data water-level-time" title="rafraîchir"></span>
       </div>
 
       <div class="total">Météo <span class="temperature"></span></div>
@@ -84,13 +84,11 @@
         <div class="danger-annotation" style="display: [iff(temperature < 2, block, none)]">Sortie déconseillée</div>
         <div class="warn-annotation" style="display: [iff(2 <= temperature && temperature < temperatureMin, block, none)]">Température faible</div>
         <div class="amazing-annotation" style="display: [iff(temperatureMin <= temperature, block, none)]">Ok</div>
-        <span class="temperature-time"></span>
+        <span class="refresh-data temperature-time" title="rafraîchir"></span>
       </div>
 
-      <div class="danger" style="display: [iff(level > 500, block, none)]">
-        <a class="refresh-data"><img srcset="/icons/_[icon].svg" height="100" width="100" title="[summary]"></a><br>
-        Sortie interdite
-      </div>
+      <img srcset="/icons/_[icon].svg" height="100" width="100" title="[summary]"><br>
+      <div class="danger" style="display: [iff(level > 500, block, none)]">Sortie interdite</div>
       <div class="amazing" style="display: [iff(temperatureMin <= temperature && level < levelMax, block, none)]">Conditions idéales</div>
     </div>
   </main>

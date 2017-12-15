@@ -68,6 +68,11 @@ const reloadMetrics = (city, station) => () =>
     console.log(err)
   })
 
+const provideHelp = station => () => {
+  console.log(station)
+  window.location.href = 'https://github.com/mycaule/can-we-row/issues/1'
+}
+
 const setOpenGraphHeaders = (city, station) => {
   $('meta[property=\'og:url\']').content = `https://can-we-row.herokuapp.com/${city}/${station}`
   $('meta[property=\'og:description\']').content = `Conditions extérieures à ${v.titleCase(city)} pour l'aviron`
@@ -153,6 +158,7 @@ if (city === null || station === null) {
   window.location.href = '/?city=paris&station=F700000103'
 } else {
   $('.refresh-data').onclick = reloadMetrics(city, station)
+  $('.help-station').onclick = provideHelp(station)
 
   setOpenGraphHeaders(city, station)
 
