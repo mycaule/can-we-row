@@ -54,6 +54,8 @@ const reloadMetrics = (city, station) => () =>
   ]).then(([res1, res2]) => {
     if (res1.ok && res2.ok) {
       location.reload()
+
+      // FIX Mavo.Expressions.update()
     }
   }).catch(err => {
     console.log(err)

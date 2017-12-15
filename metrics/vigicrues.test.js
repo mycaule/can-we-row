@@ -9,26 +9,38 @@ test('stations', async t => {
   t.is(stationsH.VersionFlux, 'Beta 0.3')
 
   const stationsQ = await vigicrues.stations('Q')
-  t.is(stationsQ.Observations.NbElements, 1327)
-  t.is(stationsQ.PasObservations.NbElements, 448)
+  t.is(stationsQ.Observations.NbElements, 1322)
+  t.is(stationsQ.PasObservations.NbElements, 453)
   t.is(stationsQ.VersionFlux, 'Beta 0.3')
 })
 
 test('observations', async t => {
-  const obsHauteurs = await vigicrues.observations('F700000103', 'H')
-  const obsDebits = await vigicrues.observations('F700000103', 'Q')
-  const obsDebitsIso = await vigicrues.observations('F700000103', 'Q', 'iso')
-  const obsDebitsIsoSimple = await vigicrues.observations('F700000103', 'Q', 'iso', 'simple')
+  const obsH = await vigicrues.observations('F700000103', 'H')
+  const obsQ = await vigicrues.observations('F700000103', 'Q')
+  const obsQIso = await vigicrues.observations('F700000103', 'Q', 'iso')
+  const obsQIsoSimple = await vigicrues.observations('F700000103', 'Q', 'iso', 'simple')
 
-  t.is(obsHauteurs.VersionFlux, 'Beta 0.3')
-  t.is(obsDebits.VersionFlux, 'Beta 0.3')
-  t.is(obsDebitsIso.VersionFlux, 'Beta 0.3')
-  t.is(obsDebitsIsoSimple.VersionFlux, 'Beta 0.3')
+  t.is(obsH.VersionFlux, 'Beta 0.3')
+  t.is(obsQ.VersionFlux, 'Beta 0.3')
+  t.is(obsQIso.VersionFlux, 'Beta 0.3')
+  t.is(obsQIsoSimple.VersionFlux, 'Beta 0.3')
 })
 
 test('informations', async t => {
   const informations = await vigicrues.informations('F700000102')
   t.is(informations.VersionFlux, 'Beta 0.3e')
+})
+
+test('previsions', async t => {
+  const infos1 = await vigicrues.informations('F700000103')
+  const infos2 = await vigicrues.informations('M530001010')
+  t.is(infos1.VersionFlux, 'Beta 0.3e')
+  t.is(infos2.VersionFlux, 'Beta 0.3e')
+
+  const prevsH = await vigicrues.previsions('M530001010', 'H')
+  const prevsQ = await vigicrues.previsions('M530001010', 'Q')
+  t.is(prevsH.VersionFlux, 'Beta 0.4e')
+  t.is(prevsQ.VersionFlux, 'Beta 0.4e')
 })
 
 test('bulletin', async t => {
@@ -39,4 +51,9 @@ test('bulletin', async t => {
 test('station inconnue', async t => {
   const error = await t.throws(vigicrues.observations('F700000105', 'Q'))
   t.is(error.value[0].error_msg, 'Code de station inconnu')
+})
+
+test('n\'est pas une station de previsions', async t => {
+  const error = await t.throws(vigicrues.previsions('F700000103'))
+  t.is(error.value[0].error_msg, 'Cette station n\'est pas une station de prévisions')
 })

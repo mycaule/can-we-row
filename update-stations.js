@@ -1,7 +1,9 @@
+// Warning : async/await syntax requires Node v8.9.3
+
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 
-const patriarchy = require('patriarchy')
+// Const patriarchy = require('patriarchy')
 
 const vigicrues = require('./metrics/vigicrues')
 
@@ -44,28 +46,61 @@ db.defaults({
   stationsH: []
 }).write()
 
-vigicrues.stations('Q')
-  .then(list => list.Observations.ListeStation.map(x => x.CdStationHydro))
-  .then(x => {
-    console.log(`wrote ${db.set('stationsQ', x).write().stationsQ.length} stations Q`)
+const TODO_LIST = ['E640091001', 'U251542001', 'O919001001', 'I362101001', 'H520101003', 'K322201001', 'U132401001', 'E381126501', 'L040061002', 'V163002002', 'Y442404001', 'A743061001', 'Y321001001', 'M530001010', 'K435001010', 'F700000103', 'L250161001', 'J709063002', 'H438021010', 'A061005051', 'O200001001']
+
+// Vigicrues.stations('Q')
+//   .then(list => list.Observations.ListeStation.map(x => x.CdStationHydro))
+//   .then(x => {
+//     console.log(`wrote ${db.set('stationsQ', x).write().stationsQ.length} stations Q`)
+//   })
+//
+// vigicrues.stations('H')
+//   .then(list => list.Observations.ListeStation.map(x => x.CdStationHydro))
+//   .then(x => {
+//     console.log(`wrote ${db.set('stationsH', x).write().stationsH.length} stations H `)
+//   })
+//
+const getInfos = async station => {
+  const {CdStationHydro, LbStationHydro, LbCoursEau, CoordStationHydro, Evenement, CdCommune} = await vigicrues.informations(station)
+
+  const x = CoordStationHydro.CoordXStationHydro
+  const y = CoordStationHydro.CoordYStationHydro
+
+  console.log({
+    CdStationHydro,
+    LbStationHydro,
+    LbCoursEau,
+    CdCommune,
+    Evenement,
+    coords: toWGS({x, y})
   })
+}
 
-vigicrues.stations('H')
-  .then(list => list.Observations.ListeStation.map(x => x.CdStationHydro))
-  .then(x => {
-    console.log(`wrote ${db.set('stationsH', x).write().stationsH.length} stations H `)
-  })
+const doUpdate = async todo => {
+  const [available, unavailable] = await vigicrues.stations('Q')
+    .then(res => [
+      res.Observations.ListeStation.map(x => x.CdStationHydro),
+      res.PasObservations.ListeStation.map(x => x.CdStationHydro)
+    ])
 
-vigicrues.informations('F700000103')
-  .then(x1 => {
-    const {LbStationHydro, LbCoursEau, CoordStationHydro} = x1
-    console.log(patriarchy({x1}))
+  const doing = todo.filter(x => available.includes(x))
 
-    console.log({
-      LbStationHydro,
-      LbCoursEau,
-      coords: toWGS({x: CoordStationHydro.CoordXStationHydro, y: CoordStationHydro.CoordYStationHydro})
-    })
-  })
+  const done = await doing.reduce(async (aP, b) => {
+    const a = await aP
+    const infos = await getInfos(b)
+    return [...a, infos]
+  }, Promise.resolve([]))
 
-// TODO Make 1327 + 1747 informations request calls to Vigicrues ! Promise.all or throttle
+  console.log(`AVAILABLE: ${available.length}`)
+  console.log(`UNAVAILABLE: ${unavailable.length}`)
+  console.log(`------------------------------------`)
+  console.log(`TODO: ${todo.length} stations`)
+  console.log(`DOING: ${doing.length} stations`)
+  console.log(`DONE: ${done.length} stations`)
+}
+
+getInfos('M530001010')
+
+doUpdate(TODO_LIST)
+
+// -TODO Make 1327 + 1747 informations request calls to Vigicrues ! Promise.all or throttle

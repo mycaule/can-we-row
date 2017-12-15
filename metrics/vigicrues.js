@@ -51,6 +51,24 @@ const Observations = struct({
   }
 })
 
+const Previsions = struct({
+  VersionFlux: 'string',
+  Simul: {
+    CdStationHydro: 'string',
+    LbStationHydro: 'string',
+    Link: 'url',
+    GrdSimul: VolumeUnit,
+    DtProdSimul: 'number',
+    CommentSimul: 'string',
+    Prevs: [{
+      DtPrev: 'number',
+      ResMinPrev: 'number',
+      ResMoyPrev: 'number',
+      ResMaxPrev: 'number'
+    }]
+  }
+})
+
 const Informations = struct({
   VersionFlux: 'string',
   CdStationHydro: 'string',
@@ -62,7 +80,10 @@ const Informations = struct({
     CoordYStationHydro: 'string'
   },
   CdCommune: 'string',
-  Evenement: 'array',
+  Evenement: struct.union(['array', struct({
+    DescEvenement: 'string',
+    DtEvenement: 'string'
+  })]),
   VigilanceCrues: {
     StationPrevision: 'string',
     Photo: 'string',
@@ -73,7 +94,7 @@ const Informations = struct({
     CruesHistoriques: [{
       LbUsuel: 'string',
       ValHauteur: 'string | null',
-      ValDebit: 'string'
+      ValDebit: 'string | null'
     }],
     StationsBassin: [{
       CdStationHydro: 'string',
@@ -82,6 +103,10 @@ const Informations = struct({
       Link: 'url'
     }],
     FluxDonnees: {
+      Previsions: struct.optional({
+        Hauteurs: 'url',
+        Debits: 'url'
+      }),
       Observations: {
         Hauteurs: 'url',
         Debits: 'url'
@@ -103,6 +128,13 @@ const Bulletin = struct({
 const ReqParams = struct({
   CdStationHydro: 'string',
   GrdSerie: VolumeUnit,
+  FormatSortie: 'simple?',
+  FormatDate: 'iso?'
+})
+
+const ReqParamsSimul = struct({
+  CdStationHydro: 'string',
+  GrdSimul: VolumeUnit,
   FormatSortie: 'simple?',
   FormatDate: 'iso?'
 })
@@ -144,9 +176,27 @@ const observations = (CdStationHydro, GrdSerie = 'H', FormatDate = undefined, Fo
     return obs
   })
 
+const previsions = (CdStationHydro, GrdSimul = 'H', FormatDate = undefined, FormatSortie = undefined) =>
+  vigicrues.get('/previsions.json/index.php', {
+    params: ReqParamsSimul({CdStationHydro, GrdSimul, FormatSortie, FormatDate})
+  }).then(resp => {
+    const prevs = Previsions(resp.data)
+
+    const [first, ...rest] = prevs.Simul.Prevs
+    const last = rest.pop()
+
+    if (first && last) {
+      console.log('Vigicrues', `${CdStationHydro} ${prevs.Simul.LbStationHydro}`, `Got ${prevs.Simul.Prevs.length} measurements from ${first.DtPrev} to ${last.DtPrev}`)
+    } else {
+      console.log('Vigicrues', `${CdStationHydro} ${prevs.Simul.LbStationHydro}`, `No measurements available`)
+    }
+
+    return prevs
+  })
+
 const bulletin = CdEntVigiCru =>
   vigicrues.get('/bulletin.json/', {
     params: {CdEntVigiCru}
   }).then(resp => Bulletin(JSON.parse(resp.data.slice(0, -1).slice(1))))
 
-module.exports = {stations, observations, informations, bulletin}
+module.exports = {stations, observations, previsions, informations, bulletin}
