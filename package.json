@@ -30,6 +30,9 @@
   },
   "devDependencies": {
     "ava": "^0.24.0",
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "patriarchy": "^1.0.8",
     "xo": "^0.19.0"
   },
