@@ -9,8 +9,8 @@ test('stations', async t => {
   t.is(stationsH.VersionFlux, 'Beta 0.3')
 
   const stationsQ = await vigicrues.stations('Q')
-  t.is(stationsQ.Observations.NbElements, 1321)
-  t.is(stationsQ.PasObservations.NbElements, 454)
+  t.is(stationsQ.Observations.NbElements, 1320)
+  t.is(stationsQ.PasObservations.NbElements, 455)
   t.is(stationsQ.VersionFlux, 'Beta 0.3')
 })
 

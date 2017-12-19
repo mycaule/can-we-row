@@ -15,6 +15,12 @@
 </head>
 
 <body mv-app mv-storage="local" mv-bar="none">
+  <meta property="stationLabel" />
+  <meta property="temperature" />
+  <meta property="icon" />
+  <meta property="summary" />
+  <meta property="level" />
+
   <div id="fb-root"></div>
   <script>
     (function(d, s, id) {
@@ -35,13 +41,11 @@
       <label>
         Ville <br>
         <select property="city"></select>
-        <input type="hidden" value="[changeCity(city)]" property="_changeCity" />
       </label>
       <label>
         Station hydro <br>
         <select property="station"></select>
         <span class="help-station" title="ajouter une station">❓</span>
-        <input type="hidden" property="stationLabel" />
       </label>
     </div>
     <div class="inputs">
@@ -58,19 +62,14 @@
       <label>
         Température mini (°C)
         <input type="number" step="0.5" value="8" property="temperatureMin" />
-        <input type="hidden" property="temperature" />
-        <input type="hidden" property="icon" />
-        <input type="hidden" property="summary" />
       </label>
       <label>
         Débit d'eau maxi (m³/s)
         <input type="number" min="300" max="500" step="10" value="470" property="levelMax" />
-        <input type="hidden" property="level" />
       </label>
       <label>
         Jour de sortie <time property="datetime" mv-mode="edit"></time>
       </label>
-      <input type="hidden" value="[changeDateTime(datetime)]" property="_changeDateTime" />
     </div>
 
     <div class="outputs">
@@ -98,6 +97,8 @@
       <div class="danger" style="display: [iff(level > 500, block, none)]">Sortie interdite</div>
       <div class="amazing" style="display: [iff(temperatureMin <= temperature && level < levelMax, block, none)]">Conditions idéales</div>
     </div>
+
+    <div id="graph3"></div>
   </main>
 
   <footer>
@@ -115,6 +116,7 @@
 
   <script src="https://dev.mavo.io/dist/mavo.es5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/voca/1.3.1/voca.min.js"></script>
+  <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
   <script src="dist/app.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment-with-locales.min.js"></script>
 </body>

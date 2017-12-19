@@ -83,7 +83,17 @@ low(adapter).then(db => {
 
   app.get('/latest/debits', (req, res) => {
     const stations = makeArray(req.query, 'stations')
-    res.json(stations.map(station => db.get('current.debits').find({station}).value()))
+    res.json(stations.map(station => {
+      const historic =
+        db.get('historic.debits')
+          .filter(elt => elt.station === station)
+          .map(elt => {
+            return {time: elt.time, meas: elt.meas}
+          }).value()
+      return Object.assign({}, db.get('current.debits').find({station}).value(), {
+        historic
+      })
+    }))
   })
 
   app.get('/metrics/hauteurs', (req, res) => {

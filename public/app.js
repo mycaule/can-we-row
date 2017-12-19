@@ -1,4 +1,6 @@
-/* global moment, Mavo, v */
+/* global moment, v, echarts */
+
+const graph3 = echarts.init(document.getElementById('graph3'))
 
 const getCitiesRef = () => fetch(`/data/cities`).then(res => {
   if (res.ok) {
@@ -29,28 +31,25 @@ const searchParams = () => {
   }
 }
 
-Mavo.Functions.changeDateTime = newDateTime => {
-  if (newDateTime) {
-    console.log('--changeDateTime')
-    console.log(newDateTime)
-  }
-  return newDateTime
-}
+document.addEventListener('mv-change', evt => {
+  console.log(evt.action, evt.property, evt.value)
 
-Mavo.Functions.changeCity = newCity => {
-  if (newCity) {
-    console.log('--changeCity')
-    const {city} = searchParams()
+  if (evt.action === 'propertychange') {
+    if (evt.property === 'datetime') {
+      console.log(evt.value)
+    }
 
-    if (newCity !== city) {
-      getCitiesRef().then(cities => {
-        window.location.href = linkTo(newCity, cities)
-      })
+    if (evt.property === 'city') {
+      const {city} = searchParams()
+
+      if (evt.value !== city) {
+        getCitiesRef().then(cities => {
+          window.location.href = linkTo(evt.value, cities)
+        })
+      }
     }
   }
-
-  return newCity
-}
+})
 
 const $ = s => document.querySelector(s)
 
@@ -117,9 +116,9 @@ const fillWeatherReport = (city, station) =>
 
             $('.temperature-time').textContent = moment.unix(curr.time / 1000).locale('fr').fromNow()
 
-            $('input[property=\'temperature\']').value = curr.meas.temperature
-            $('input[property=\'icon\']').value = curr.icon
-            $('input[property=\'summary\']').value = `${v.lowerCase(curr.summary)} | Humid. ${(curr.meas.humidity * 100).toFixed(0)} % | Press. ${curr.meas.pressure.toFixed(0)} hPa`
+            $('meta[property=\'temperature\']').content = curr.meas.temperature
+            $('meta[property=\'icon\']').content = curr.icon
+            $('meta[property=\'summary\']').content = `${v.lowerCase(curr.summary)} | Humid. ${(curr.meas.humidity * 100).toFixed(0)} % | Press. ${curr.meas.pressure.toFixed(0)} hPa`
             console.log(curr)
           }
         })
@@ -128,6 +127,157 @@ const fillWeatherReport = (city, station) =>
     .catch(err => {
       console.log(err)
     })
+
+// See https://github.com/mycaule/visus-vigicrues
+const getDebitsLastMonth = obs => {
+  const dateMin = moment.unix(obs[0].time / 1000).format('YYYY-MM-DD')
+  const dateMax = moment.unix(obs.slice(-1)[0].time / 1000).format('YYYY-MM-DD')
+  const data = obs.reduce((acc, x) => {
+    const date = moment.unix(x.time / 1000)
+    acc.push([date.format('YYYY-MM-DD'), x.meas])
+    return acc
+  }, [])
+
+  return [data, dateMin, dateMax]
+}
+
+const drawLastMonth = (observations, levelMax) => {
+  console.log('drawLastMonth', observations)
+  const [data, dateMin, dateMax] = getDebitsLastMonth(observations)
+
+  console.log('drawLastMonth', dateMin, dateMax)
+  const calStart = moment(dateMin).startOf('month').format('2017-MM-DD')
+  const calEnd = moment(dateMax).endOf('month').format('2017-MM-DD')
+
+  const option = {
+    backgroundColor: '#404a59',
+
+    title: {
+      top: 30,
+      text: 'Données du mois dernier',
+      subtext: 'Source: vigicrues.com',
+      left: 'center',
+      textStyle: {
+        color: '#fff'
+      }
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '30',
+      left: '100',
+      data: ['Danger'],
+      textStyle: {
+        color: '#fff'
+      }
+    },
+    calendar: [{
+      top: 100,
+      left: 'center',
+      range: [calStart, calEnd],
+      splitLine: {
+        show: true,
+        lineStyle: {
+          color: '#000',
+          width: 4,
+          type: 'solid'
+        }
+      },
+      yearLabel: {
+        formatter: '{start}',
+        textStyle: {
+          color: '#fff'
+        }
+      },
+      itemStyle: {
+        normal: {
+          color: '#323c48',
+          borderWidth: 1,
+          borderColor: '#111'
+        }
+      }
+    }],
+    series: [
+      {
+        name: 'Autres',
+        type: 'scatter',
+        coordinateSystem: 'calendar',
+        data,
+        symbolSize(val) {
+          return val[1] / 50
+        },
+        itemStyle: {
+          normal: {
+            color: '#ddb926'
+          }
+        }
+      },
+      {
+        name: 'Autres',
+        type: 'scatter',
+        coordinateSystem: 'calendar',
+        calendarIndex: 1,
+        data,
+        symbolSize(val) {
+          return val[1] / 50
+        },
+        itemStyle: {
+          normal: {
+            color: '#ddb926'
+          }
+        }
+      },
+      {
+        name: 'Danger',
+        type: 'effectScatter',
+        coordinateSystem: 'calendar',
+        calendarIndex: 1,
+        data: data.filter(x => x[1] > levelMax),
+        symbolSize(val) {
+          return val[1] / 50
+        },
+        showEffectOn: 'render',
+        rippleEffect: {
+          brushType: 'stroke'
+        },
+        hoverAnimation: true,
+        itemStyle: {
+          normal: {
+            color: '#f4e925',
+            shadowBlur: 10,
+            shadowColor: '#333'
+          }
+        },
+        zlevel: 1
+      },
+      {
+        name: 'Danger',
+        type: 'effectScatter',
+        coordinateSystem: 'calendar',
+        data: data.filter(x => x[1] > levelMax),
+        symbolSize(val) {
+          return val[1] / 50
+        },
+        showEffectOn: 'render',
+        rippleEffect: {
+          brushType: 'stroke'
+        },
+        hoverAnimation: true,
+        itemStyle: {
+          normal: {
+            color: '#f4e925',
+            shadowBlur: 10,
+            shadowColor: '#333'
+          }
+        },
+        zlevel: 1
+      }
+    ]
+  }
+
+  graph3.setOption(option, true)
+}
 
 const fillWaterReport = station =>
   fetch(`/latest/debits?stations=${station}`)
@@ -140,10 +290,13 @@ const fillWaterReport = station =>
             const curr = data.find(elt => elt.station === station)
             $('.water-level').textContent = `${curr.meas.toFixed(1)} m³/s`
             $('.water-level-time').textContent = moment.unix(curr.time / 1000).locale('fr').fromNow()
-            $('input[property=\'stationLabel\']').value = curr.label
-            $('input[property=\'level\']').value = curr.meas
+            $('meta[property=\'stationLabel\']').content = curr.label
+            $('meta[property=\'level\']').content = curr.meas
             $('time[property=\'datetime\']').setAttribute('datetime', moment().format('YYYY-MM-DD'))
             console.log(curr)
+
+            const levelMax = $('input[property=\'levelMax\']').value
+            drawLastMonth(curr.historic, levelMax)
           }
         })
       }
