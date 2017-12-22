@@ -1,4 +1,7 @@
-/* global moment, v, echarts */
+import moment from 'moment'
+import titleCase from 'voca/title_case'
+import lowerCase from 'voca/lower_case'
+import echarts from 'echarts'
 
 const graph3 = echarts.init(document.getElementById('graph3'))
 
@@ -74,7 +77,7 @@ const provideHelp = station => () => {
 
 const setOpenGraphHeaders = (city, station) => {
   $('meta[property=\'og:url\']').content = `https://can-we-row.herokuapp.com/${city}/${station}`
-  $('meta[property=\'og:description\']').content = `Conditions extérieures à ${v.titleCase(city)} pour l'aviron`
+  $('meta[property=\'og:description\']').content = `Conditions extérieures à ${titleCase(city)} pour l'aviron`
 }
 
 const initHTMLFields = (city, station, citiesRef, stationsRef) => {
@@ -118,7 +121,7 @@ const fillWeatherReport = (city, station) =>
 
             $('meta[property=\'temperature\']').content = curr.meas.temperature
             $('meta[property=\'icon\']').content = curr.icon
-            $('meta[property=\'summary\']').content = `${v.lowerCase(curr.summary)} | Humid. ${(curr.meas.humidity * 100).toFixed(0)} % | Press. ${curr.meas.pressure.toFixed(0)} hPa`
+            $('meta[property=\'summary\']').content = `${lowerCase(curr.summary)} | Humid. ${(curr.meas.humidity * 100).toFixed(0)} % | Press. ${curr.meas.pressure.toFixed(0)} hPa`
             console.log(curr)
           }
         })

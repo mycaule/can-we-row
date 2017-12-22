@@ -85,6 +85,7 @@ const Informations = struct({
     DtEvenement: 'string'
   })]),
   VigilanceCrues: {
+    ZoomInitial: 'string',
     StationPrevision: 'string',
     Photo: 'string',
     PereBoitEntVigiCru: {

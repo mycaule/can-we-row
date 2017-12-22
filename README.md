@@ -126,15 +126,14 @@ Changes and improvements are welcome! Feel free to fork and open a pull request 
 ### Roadmap
 
 - [ ] UI: [Threshold detection](https://github.com/mycaule/can-we-row/wiki/Threshold-detection)
-- [ ] UI: Graphing past few days historical data and forecasts for next days
-- [ ] Calendar: Ability to select future day of the week
+- [ ] UI: Graphing past few days historical data and forecasts for next days, [echarts liquidfill](https://github.com/ecomfe/echarts-liquidfill]) [echarts gauge](https://ecomfe.github.io/echarts-doc/public/en/option.html#series-gauge)
 - [ ] Calendar: Ability to rate and comment past hikes though FB comments
 - [ ] Data quality: Add more metrics (météo des plages, météo des neiges)
 - [ ] Purpose: Investigate about Kayak and also river sports events
 - [ ] Alert: Add email alerts with custom rules based on thresholds
 - [ ] Time series: which one is [the best for our usecase](https://github.com/mycaule/can-we-row/wiki/Time-series-aggregation)
 - [ ] Migration: from LowDB to another DB
-- [ ] Cartography: provide information [on local map](https://github.com/mycaule/can-we-row/wiki/Cartography)
+- [ ] Cartography: provide information [on local map](https://github.com/mycaule/can-we-row/wiki/Cartography): echarts can do that
 - [ ] Errors with `superstruct` [returning-errors](https://github.com/ianstormtaylor/superstruct/blob/master/examples/returning-errors.js), [throwing-errors](https://github.com/ianstormtaylor/superstruct/blob/master/examples/throwing-errors.js), [custom-errors](https://github.com/ianstormtaylor/superstruct/blob/master/examples/custom-errors.js)
 
 ### License

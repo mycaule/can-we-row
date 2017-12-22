@@ -6,12 +6,12 @@ test('stations', async t => {
   const stationsH = await vigicrues.stations()
   t.is(stationsH.Observations.NbElements, 1747)
   t.is(stationsH.PasObservations.NbElements, 28)
-  t.is(stationsH.VersionFlux, 'Beta 0.3')
+  t.is(stationsH.VersionFlux, 'Beta 0.4a')
 
   const stationsQ = await vigicrues.stations('Q')
-  t.is(stationsQ.Observations.NbElements, 1320)
-  t.is(stationsQ.PasObservations.NbElements, 455)
-  t.is(stationsQ.VersionFlux, 'Beta 0.3')
+  t.is(stationsQ.Observations.NbElements, 1324)
+  t.is(stationsQ.PasObservations.NbElements, 451)
+  t.is(stationsQ.VersionFlux, 'Beta 0.4a')
 })
 
 test('observations', async t => {
@@ -20,22 +20,22 @@ test('observations', async t => {
   const obsQIso = await vigicrues.observations('F700000103', 'Q', 'iso')
   const obsQIsoSimple = await vigicrues.observations('F700000103', 'Q', 'iso', 'simple')
 
-  t.is(obsH.VersionFlux, 'Beta 0.3')
-  t.is(obsQ.VersionFlux, 'Beta 0.3')
-  t.is(obsQIso.VersionFlux, 'Beta 0.3')
-  t.is(obsQIsoSimple.VersionFlux, 'Beta 0.3')
+  t.is(obsH.VersionFlux, 'Beta 0.4a')
+  t.is(obsQ.VersionFlux, 'Beta 0.4a')
+  t.is(obsQIso.VersionFlux, 'Beta 0.4a')
+  t.is(obsQIsoSimple.VersionFlux, 'Beta 0.4a')
 })
 
 test('informations', async t => {
   const informations = await vigicrues.informations('F700000102')
-  t.is(informations.VersionFlux, 'Beta 0.3e')
+  t.is(informations.VersionFlux, 'Beta 0.3g')
 })
 
 test('previsions', async t => {
   const infos1 = await vigicrues.informations('F700000103')
   const infos2 = await vigicrues.informations('M530001010')
-  t.is(infos1.VersionFlux, 'Beta 0.3e')
-  t.is(infos2.VersionFlux, 'Beta 0.3e')
+  t.is(infos1.VersionFlux, 'Beta 0.3g')
+  t.is(infos2.VersionFlux, 'Beta 0.3g')
 
   const prevsH = await vigicrues.previsions('M530001010', 'H')
   const prevsQ = await vigicrues.previsions('M530001010', 'Q')
