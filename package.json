@@ -21,11 +21,12 @@
   "dependencies": {
     "axios": "^0.17.1",
     "express": "^5.0.0-alpha.6",
+    "helmet": "^3.9.0",
     "is": "^3.2.1",
     "is-url": "^1.2.2",
     "lowdb": "^1.0.0",
     "prom-client": "^10.2.2",
-    "superstruct": "^0.4.6"
+    "superstruct": "^0.5.0"
   },
   "devDependencies": {
     "ava": "^0.24.0",

@@ -1,4 +1,6 @@
 const express = require('express')
+const helmet = require('helmet')
+
 const is = require('is')
 const prometheus = require('prom-client')
 
@@ -43,7 +45,7 @@ const makeArray = (query, field) => {
   return result
 }
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5050
 
 low(adapter).then(db => {
   db._.mixin({
@@ -61,6 +63,8 @@ low(adapter).then(db => {
       })
     }
   })
+
+  app.use(helmet())
 
   app.use(express.static('public'))
 

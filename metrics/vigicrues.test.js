@@ -4,13 +4,13 @@ const vigicrues = require('./vigicrues')
 
 test('stations', async t => {
   const stationsH = await vigicrues.stations()
-  t.is(stationsH.Observations.NbElements, 1747)
-  t.is(stationsH.PasObservations.NbElements, 28)
+  t.true(stationsH.Observations.NbElements > 1700)
+  t.true(stationsH.PasObservations.NbElements < 50)
   t.is(stationsH.VersionFlux, 'Beta 0.4a')
 
   const stationsQ = await vigicrues.stations('Q')
-  t.is(stationsQ.Observations.NbElements, 1324)
-  t.is(stationsQ.PasObservations.NbElements, 451)
+  t.true(stationsQ.Observations.NbElements > 1300)
+  t.true(stationsQ.PasObservations.NbElements < 500)
   t.is(stationsQ.VersionFlux, 'Beta 0.4a')
 })
 
