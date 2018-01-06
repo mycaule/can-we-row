@@ -149,15 +149,15 @@ const drawLastMonth = (observations, levelMax) => {
   const [data, dateMin, dateMax] = getDebitsLastMonth(observations)
 
   console.log('drawLastMonth', dateMin, dateMax)
-  const calStart = moment(dateMin).startOf('month').format('2017-MM-DD')
-  const calEnd = moment(dateMax).endOf('month').format('2017-MM-DD')
+  const calStart = moment(dateMin).startOf('month').format('YYYY-MM-DD')
+  const calEnd = moment(dateMax).endOf('month').format('YYYY-MM-DD')
 
   const option = {
     backgroundColor: '#404a59',
 
     title: {
       top: 30,
-      text: 'Données du mois dernier',
+      text: 'Données du mois écoulé',
       subtext: 'Source: vigicrues.com',
       left: 'center',
       textStyle: {
